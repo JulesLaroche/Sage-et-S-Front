@@ -29,6 +29,7 @@ function SignUp() {
       firstname: form.firstname,
       lastname: form.lastname,
       email: form.email,
+      category: form.category,
       password: passwd
     }
 
@@ -92,6 +93,16 @@ function SignUp() {
                     <div className="w-full px-3">
                       <label className="block text-gray-600 text-sm font-medium mb-1" htmlFor="nom">Nom <span className="text-red-600">*</span></label>
                       <input id="nom" type="text" className="form-input w-full text-gray-600" placeholder="Votre nom" required name="lastname" onChange={handleChange} />
+                    </div>
+                  </div>
+                  <div className="flex flex-wrap -mx-3 mb-4">
+                    <div className="w-full px-3">
+                      <label className="block text-gray-600 text-sm font-medium mb-1" htmlFor="category">Vous êtes: <span className="text-red-600">*</span></label>
+                      <select className="block appearance-none text-gray-600 w-full bg-white border border-gray-600 shadow-inner px-4 py-2 pr-8 " required name="category" onChange={handleChange}>
+                                            <option value="">Choisir...</option>
+                                            <option value="Apprenti">Apprenti en demande de services</option>
+                                            <option value="Sage">Sage pour partager mon savoir</option>
+                                        </select>
                     </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">

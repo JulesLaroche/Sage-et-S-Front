@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Formulaire() {
+
+
   const [title, setTitle] = useState('');
   const [type, setType] = useState('');
   const [category, setCategory] = useState('');
@@ -14,6 +16,25 @@ function Formulaire() {
   const [img_name, setImageName] = useState('');
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Récupérer l'ID utilisateur à partir du localStorage
+    const id = localStorage.getItem('id');
+
+    // Faire une requête pour obtenir la catégorie de l'utilisateur en utilisant l'ID
+    fetch(`http://localhost:3001/users/${id}`, {
+      credentials: 'include',
+      method: 'GET',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const { category } = data;
+
+        setCategory(category);
+
+      })
+      .catch((error) => console.error(error));
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,7 +62,7 @@ function Formulaire() {
 
         const body = {
           title,
-          type,
+          type:category == 'apprenti' ? 'apprenti' : 'sage',
           category,
           description,
           price,
@@ -98,19 +119,21 @@ function Formulaire() {
 
                   <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mt-3 mb-2'>Type d'annonce:</label>
                   <div className="flex-shrink w-full inline-block relative">
-                    <select
-                      className="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded"
-                      value={type}
-                      onChange={(e) => setType(e.target.value)}
-                    >
-                      <option>Choisir...</option>
-                      <option>Démandeur - Apprentis</option>
-                      <option>Proposition de service - Sage</option>
-                    </select>
+                    <h1 className="font-bold text-red-600 ">
+                      {category === "apprenti"
+                        ? "Annonce pour demander un service"
+                        : "Annonce pour proposer un service"}
+                    </h1>
                     <div className="pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-gray-600"></div>
                   </div>
 
-                  <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mt-3 mb-2'>Catégories:</label>
+                  <label className="block uppercase tracking-wide text-gray-700 text-xs font-bold mt-3">
+                    Catégories:
+                  </label>
+                  <div className="flex-shrink w-full inline-block relative">
+
+                    <div className="pointer-events-none absolute top-0  right-0 flex items-center px-2 text-gray-600"></div>
+                  </div>
                   <div className="flex-shrink w-full inline-block relative">
                     <select
                       className="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded"
@@ -118,17 +141,18 @@ function Formulaire() {
                       onChange={(e) => setCategory(e.target.value)}
                     >
                       <option>Choisir...</option>
+                      <option>Services à la personne</option>
+                      <option>Cuisine</option>
+                      <option>Travaux</option>
+                      <option>Cours et formations</option>
+                      <option>Enfants</option>
+                      <option>Bricolage et déco </option>
+                      <option>Mécanique</option>
+                      <option>Photo et Audio-vidéo</option>
                       <option>Jardinage</option>
-                      <option>Cuisine</option>
-                      <option>Cuisine</option>
-                      <option>Cuisine</option>
-                      <option>Cuisine</option>
-                      <option>Cuisine</option>
-                      <option>Cuisine</option>
-                      <option>Cuisine</option>
-                      <option>Cuisine</option>
-                      <option>Cuisine</option>
-                      <option>Cuisine</option>
+                      <option>Administration et gestion</option>
+                      <option>Transport</option>
+                      <option>Apprendre à lire et ecrire</option>
                     </select>
                     <div className="pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-gray-600"></div>
                   </div>
@@ -200,12 +224,12 @@ function Formulaire() {
                     </div>
                   </div>
                 </div>
-                <div class="mt-1 flex  justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                  <div class="space-y-1 text-center">
-                    <svg class="mx-auto h-12 w-12 text-black" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <div className="mt-1 flex  justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                  <div className="space-y-1 text-center">
+                    <svg className="mx-auto h-12 w-12 text-black" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                      <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    <div class="flex text-sm text-gray-600">
+                    <div className="flex text-sm text-gray-600">
                       <label htmlFor="file-upload" className="relative cursor-pointer bg-gray-200 rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                         <span className="">Upload a file</span>
                         <input
@@ -216,9 +240,9 @@ function Formulaire() {
                           onChange={handleFileChange} // Utilisez la fonction handleFileChange pour gérer le changement de fichier
                         />
                       </label>
-                      <p class="pl-1 text-black">or drag and drop</p>
+                      <p className="pl-1 text-black">or drag and drop</p>
                     </div>
-                    <p class="text-xs text-black">
+                    <p className="text-xs text-black">
                       PNG, JPG, GIF up to 10MB
                     </p>
                   </div>

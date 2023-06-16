@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PageIllustration from '../partials/PageIllustration';
 import Footer from '../partials/Footer';
+import MesAnnonces from '../partials/MesAnnonces';
 
 function Account() {
   const [firstName, setFirstName] = useState('');
@@ -53,6 +54,7 @@ function Account() {
     navigate('/mes-annonces');
   };
 
+  
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
       {/* Site header */}
@@ -65,8 +67,8 @@ function Account() {
           <PageIllustration />
         </div>
 
-        <section className='relative pt-32 pb-10 md:pt-40 md:pb-1'>
-          <div className='max-w-5xl mx-auto pb-8 md:pb-8'>
+        <section className='relative pt-32 md:pt-40 md:pb-1'>
+          <div className='max-w-5xl mx-auto '>
             <div className="py-12 md:py-8">
               {/* Section header */}
               <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
@@ -97,9 +99,7 @@ function Account() {
                     </div>
 
                     <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-                      <button className="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5" onClick={mesAnnonces}>
-                        Mes annonces
-                      </button>
+
                       <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5" onClick={handleEditProfile}>
                         Modifier mon profil
                       </button>
@@ -107,8 +107,8 @@ function Account() {
                   </div>
 
                   <div className="mt-20 text-center border-b pb-12">
-                    <h1 className="text-4xl font-medium text-gray-700">
-                      {firstName} {lastName} <span className="font-light text-gray-500">{category}</span>
+                    <h1 className="text-4xl font-medium text-gray-700 uppercase">
+                      {firstName} {lastName} <span className="font-light text-gray-500  text-red-500 font-bold">{category}</span>
                     </h1>
                     <p className="font-light text-gray-600 mt-3">
                       {address} {postalCode} {city}
@@ -128,7 +128,9 @@ function Account() {
               </div>
             </div>
           </div>
-
+          <div id="liste-annonces">
+          <MesAnnonces/>
+          </div>
         </section>
       </main>
 

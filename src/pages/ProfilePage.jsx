@@ -14,6 +14,7 @@ import Profile from '../partials/Profile';
 
 
 
+
 function ProfilePage() {
   const navigate = useNavigate();
 
@@ -43,6 +44,7 @@ function ProfilePage() {
 
 
    <Profile />
+
         </main>
 
   

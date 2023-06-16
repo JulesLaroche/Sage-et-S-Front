@@ -26,6 +26,34 @@ function ModifAnnonce() {
   const navigate = useNavigate();
   // const { id } = useParams();
 
+  const handleDelete = () => {
+    // Vérifier si l'ID utilisateur est présent dans le local storage
+    const userId = localStorage.getItem('id');
+    if (!userId) {
+      // Rediriger vers la page d'inscription si l'ID utilisateur n'est pas trouvé
+      navigate('/signup');
+      return;
+    }
+  
+    // Envoyer une requête DELETE à l'API pour supprimer l'annonce
+    fetch(`http://localhost:3001/service/${id}`, {
+      credentials: 'include',
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ user_id: userId }),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log('Annonce supprimée avec succès');
+          // Rediriger ou effectuer d'autres actions après la suppression réussie
+          navigate('/mes-annonces');
+        }
+      })
+      .catch((error) => console.error(error));
+  };
+
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get('id');
@@ -165,15 +193,11 @@ function ModifAnnonce() {
 
                             <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mt-3 mb-2'>Type d'annonce:</label>
                             <div className="flex-shrink w-full inline-block relative">
-                              <select
-                                className="block appearance-none text-gray-600 w-full bg-white border border-gray-400 shadow-inner px-4 py-2 pr-8 rounded"
-                                value={type}
-                                onChange={(e) => setType(e.target.value)}
-                              >
-                                <option>Choisir...</option>
-                                <option>Démandeur - Apprentis</option>
-                                <option>Proposition de service - Sage</option>
-                              </select>
+                              <h1 className="font-bold text-red-600 ">
+                                {category === "apprenti"
+                                  ? "Annonce pour demander un service"
+                                  : "Annonce pour proposer un service"}
+                              </h1>
                               <div className="pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-gray-600"></div>
                             </div>
 
@@ -241,7 +265,7 @@ function ModifAnnonce() {
                               type='text'
                               required
                               value={postal_code}
-                              onChange={(e) => setPostalCode(e.target.value)}
+                              onChange={(e) => setPostal_code(e.target.value)}
                             />
 
                             <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mt-3 mb-2'>Ville</label>
@@ -252,25 +276,25 @@ function ModifAnnonce() {
                               value={city}
                               onChange={(e) => setCity(e.target.value)}
                             />
-                            <div class="mt-1 flex  justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                              <div class="space-y-1 text-center">
-                                <svg class="mx-auto h-12 w-12 text-black" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                                  <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            <div className="mt-1 flex  justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+                              <div className="space-y-1 text-center">
+                                <svg className="mx-auto h-12 w-12 text-black" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
+                                  <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
-                                <div class="flex text-sm text-gray-600">
-                                  <label for="file-upload" class="relative cursor-pointer bg-gray-200 rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
-                                    <span class="">Upload a file</span>
+                                <div className="flex text-sm text-gray-600">
+                                  <label for="file-upload" className="relative cursor-pointer bg-gray-200 rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                                    <span className="">Upload a file</span>
                                     <input
                                       id="file-upload"
                                       name="file-upload"
                                       type="file"
-                                      class="sr-only"
+                                      className="sr-only"
                                       onChange={handleFileChange} // Utilisez la fonction handleFileChange pour gérer le changement de fichier
                                     />
                                   </label>
-                                  <p class="pl-1 text-black">or drag and drop</p>
+                                  <p className="pl-1 text-black">or drag and drop</p>
                                 </div>
-                                <p class="text-xs text-black">
+                                <p className="text-xs text-black">
                                   PNG, JPG, GIF up to 10MB
                                 </p>
                               </div>
@@ -280,6 +304,12 @@ function ModifAnnonce() {
                               type='submit'
                             >
                               Mettre à jour votre annonce
+                            </button>
+                            <button
+                              className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 mt-5 rounded'
+                              onClick={handleDelete}
+                            >
+                              Supprimer l'annonce
                             </button>
                           </div>
                         </div>

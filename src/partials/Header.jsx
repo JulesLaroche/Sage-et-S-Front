@@ -123,10 +123,16 @@ function Header() {
                 </a>
               </li>
               <li>
-                <a href="/mes-annonces" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                <a href="/compte#liste-annonces" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                   Liste de mes annonces
                 </a>
               </li>
+              <li>
+                <a href="/chat" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                  Messagerie
+                </a>
+              </li>
+
               <li>
                 <a
                   href="#"
@@ -159,7 +165,7 @@ function Header() {
     <header className="fixed w-full z-30 py-3 bg-white bg-opacity-80 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
-  
+
           {/* Site branding */}
           <div className="shrink-0 mr-4">
             {/* Logo */}
@@ -167,10 +173,10 @@ function Header() {
               <img className="w-20 h-20 fill-current text-purple-600" src="\src\images\logo.png" alt="" />
             </Link>
           </div>
-  
+
           {/* Desktop navigation */}
           <nav className="hidden md:flex md:grow">
-  
+
             {/* Desktop sign in links */}
             <ul className="flex grow justify-end flex-wrap items-center">
               <li>
@@ -188,10 +194,10 @@ function Header() {
             </ul>
             {button}
           </nav>
-  
+
           {/* Mobile menu */}
           <div className="md:hidden">
-  
+
             {/* Hamburger button */}
             <button ref={trigger} className={`hamburger ${mobileNavOpen && 'active'}`} aria-controls="mobile-nav" aria-expanded={mobileNavOpen} onClick={() => setMobileNavOpen(!mobileNavOpen)}>
               <span className="sr-only">Menu</span>
@@ -201,7 +207,7 @@ function Header() {
                 <rect y="18" width="24" height="2" rx="1" />
               </svg>
             </button>
-  
+
             {isLoggedIn ? (
               <nav id="mobile-nav" ref={mobileNav} className="absolute top-full z-20 left-0 w-full px-4 sm:px-6 overflow-hidden transition-all duration-300 ease-in-out" style={mobileNavOpen ? { maxHeight: mobileNav.current.scrollHeight, opacity: 1 } : { maxHeight: 0, opacity: .8 }}>
                 <ul className="bg-gray-800 px-4 py-2">
@@ -216,6 +222,9 @@ function Header() {
                   </li>
                   <li>
                     <Link to="/mes-annonces" className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out">Liste de mes annonces</Link>
+                  </li>
+                  <li>
+                    <Link to="/chat" className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out">Messagerie</Link>
                   </li>
                   <li>
                     <Link to="/" className="font-medium w-full inline-flex items-center justify-center border border-transparent px-4 py-2 my-2 rounded-sm text-white bg-purple-800 hover:bg-purple-700 transition duration-150 ease-in-out" onClick={handleLogout}>Deconnexion</Link>
@@ -247,12 +256,12 @@ function Header() {
               </nav>
             )}
           </div>
-  
+
         </div>
       </div>
     </header>
   );
-  
+
 }
 
 export default Header;

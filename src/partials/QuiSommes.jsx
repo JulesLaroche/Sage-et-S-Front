@@ -13,7 +13,7 @@ function QuiSommes() {
                     </div>
 
 
-                    <p class="text-justify h4 mb-2 pb-12 first-letter:text-2.5xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:float-left">Nous sommes deux femmes entrepreneuses ayant la volonté de simplifier les tâches de la vie quotidienne, tout en permettant aux séniors de la ville de Toulon de transmettre leurs savoirs et compétences. Rien de mieux que de trouver conseils auprès de personnes expérimentées et pleines de sagesse.</p>
+                    <p className="text-justify h4 mb-2 pb-12 first-letter:text-2.5xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:float-left">Nous sommes deux femmes entrepreneuses ayant la volonté de simplifier les tâches de la vie quotidienne, tout en permettant aux séniors de la ville de Toulon de transmettre leurs savoirs et compétences. Rien de mieux que de trouver conseils auprès de personnes expérimentées et pleines de sagesse.</p>
                     <div className="max-w-sm mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-2 lg:gap-16 items-start md:max-w-2xl lg:max-w-none" data-aos-id-blocks>
 
                         {/* 1st item */}
@@ -67,27 +67,27 @@ function QuiSommes() {
                     </div>
 
 
-                    <div class="min-h-screen pt-12 ">
-                        <div class="flex flex-row w-full">
+                    <div className="min-h-screen pt-12 ">
+                        <div className="flex flex-row w-full">
 
-                            <div class="w-2/5 px-2 py-5">
-                                <div class="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
-                                    <div class="text-gray-600 mb-2 flex justify-between">
-                                        <div class="font-bold">
+                            <div className="w-2/5 px-2 py-5">
+                                <div className="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
+                                    <div className="text-gray-600 mb-2 flex justify-between">
+                                        <div className="font-bold">
                                             Le début...
                                         </div>
 
                                     </div>
-                                    <div class="text-gray-600">
-                                        - Pertinence d’une plateforme numérique ? <br />  - Groupe projet social et solidaire d’entraide entre toulonnais sur Facebook <img className='h-8' src="src\images\image1.png" alt="" srcset="" />
+                                    <div className="text-gray-600">
+                                        - Pertinence d’une plateforme numérique ? <br />  - Groupe projet social et solidaire d’entraide entre toulonnais sur Facebook <img className='h-8' src="src\images\image1.png" alt="" srcSet="" />
                                     </div>
                                 </div>
 
                             </div>
 
-                            <div class="w-1/5  flex justify-center">
-                                <div class="relative flex h-full w-1 bg-blue-400 items-center justify-center">
-                                    <div class="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
+                            <div className="w-1/5  flex justify-center">
+                                <div className="relative flex h-full w-1 bg-blue-400 items-center justify-center">
+                                    <div className="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
                                         <div>Fin</div>
                                         <div>Juin</div>
                                     </div>
@@ -97,16 +97,16 @@ function QuiSommes() {
 
                         </div>
 
-                        <div class="flex flex-row w-full">
+                        <div className="flex flex-row w-full">
 
 
-                            <div class="w-2/5 px-2 py-10">
+                            <div className="w-2/5 px-2 py-10">
 
                             </div>
 
-                            <div class="w-1/5  flex justify-center">
-                                <div class="relative flex h-full w-1 bg-blue-400 items-center justify-center">
-                                    <div class="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
+                            <div className="w-1/5  flex justify-center">
+                                <div className="relative flex h-full w-1 bg-blue-400 items-center justify-center">
+                                    <div className="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
                                         <div>07/07</div>
                                         <div>au</div>
                                         <div>07/08</div>
@@ -114,40 +114,40 @@ function QuiSommes() {
                                 </div>
                             </div>
 
-                            <div class="w-2/5 px-2 py-10 ">
-                                <div class="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
-                                    <div class="text-gray-600 mb-2 flex justify-between">
-                                        <div class="font-bold">
+                            <div className="w-2/5 px-2 py-10 ">
+                                <div className="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
+                                    <div className="text-gray-600 mb-2 flex justify-between">
+                                        <div className="font-bold">
                                             Enquête
                                         </div>
                                     </div>
-                                    <div class="text-gray-600">
+                                    <div className="text-gray-600">
                                         Enquête quantitative sur   les causes d’isolement des séniors sur Toulon 63 répondants et 22 rencontres physiques
-                                        . <img className='h-8' src="src\images\image2.png" alt="" srcset="" />
+                                        . <img className='h-8' src="src\images\image2.png" alt="" srcSet="" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-row w-full">
+                        <div className="flex flex-row w-full">
 
-                            <div class="w-2/5 px-2 py-5">
-                                <div class="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
-                                    <div class="text-gray-600 mb-2 flex justify-between">
-                                        <div class="font-bold">
+                            <div className="w-2/5 px-2 py-5">
+                                <div className="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
+                                    <div className="text-gray-600 mb-2 flex justify-between">
+                                        <div className="font-bold">
                                             Entretien
                                         </div>
 
                                     </div>
-                                    <div class="text-gray-600">
-                                        3 entretiens qualitatifs sur l’isolement des séniors <img className='h-8' src="src\images\image3.png" alt="" srcset="" />
+                                    <div className="text-gray-600">
+                                        3 entretiens qualitatifs sur l’isolement des séniors <img className='h-8' src="src\images\image3.png" alt="" srcSet="" />
                                     </div>
                                 </div>
 
                             </div>
 
-                            <div class="w-1/5  flex justify-center">
-                                <div class="relative flex h-full w-1 bg-blue-400 items-center justify-center">
-                                    <div class="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
+                            <div className="w-1/5  flex justify-center">
+                                <div className="relative flex h-full w-1 bg-blue-400 items-center justify-center">
+                                    <div className="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
                                         <div>07/07</div>
                                         <div>au</div>
                                         <div>18/07</div>
@@ -155,41 +155,41 @@ function QuiSommes() {
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-row w-full">
-                            <div class="w-2/5 px-2 py-10">
+                        <div className="flex flex-row w-full">
+                            <div className="w-2/5 px-2 py-10">
                             </div>
-                            <div class="w-1/5  flex justify-center">
-                                <div class="relative flex h-full w-1 bg-blue-400 items-center justify-center">
-                                    <div class="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
+                            <div className="w-1/5  flex justify-center">
+                                <div className="relative flex h-full w-1 bg-blue-400 items-center justify-center">
+                                    <div className="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
                                         <div>01/08</div>
 
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-2/5 px-2 py-10 ">
-                                <div class="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
-                                    <div class="text-gray-600 mb-2 flex justify-between">
-                                        <div class="font-bold">
+                            <div className="w-2/5 px-2 py-10 ">
+                                <div className="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
+                                    <div className="text-gray-600 mb-2 flex justify-between">
+                                        <div className="font-bold">
                                             Un regard
                                         </div>
                                     </div>
-                                    <div class="text-gray-600">
+                                    <div className="text-gray-600">
                                         Regard inversé nous souhaitons partir de ce que les séniors peuvent faire et transmettre.
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-row w-full">
+                        <div className="flex flex-row w-full">
 
-                            <div class="w-2/5 px-2 py-5">
-                                <div class="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
-                                    <div class="text-gray-600 mb-2 flex justify-between">
-                                        <div class="font-bold">
+                            <div className="w-2/5 px-2 py-5">
+                                <div className="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
+                                    <div className="text-gray-600 mb-2 flex justify-between">
+                                        <div className="font-bold">
                                             Enquête
                                         </div>
 
                                     </div>
-                                    <div class="text-gray-600">
+                                    <div className="text-gray-600">
                                         Enquête quantitative auprès des séniors et l’ensemble de habitants de Toulon
 
                                     </div>
@@ -197,9 +197,9 @@ function QuiSommes() {
 
                             </div>
 
-                            <div class="w-1/5  flex justify-center">
-                                <div class="relative flex h-full w-1 bg-blue-400 items-center justify-center">
-                                    <div class="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
+                            <div className="w-1/5  flex justify-center">
+                                <div className="relative flex h-full w-1 bg-blue-400 items-center justify-center">
+                                    <div className="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
                                         <div>05/08</div>
                                         <div>au</div>
                                         <div>22/08</div>
@@ -207,41 +207,41 @@ function QuiSommes() {
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-row w-full">
-                            <div class="w-2/5 px-2 py-10">
+                        <div className="flex flex-row w-full">
+                            <div className="w-2/5 px-2 py-10">
                             </div>
-                            <div class="w-1/5  flex justify-center">
-                                <div class="relative flex h-full w-1 bg-blue-400 items-center justify-center">
-                                    <div class="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
+                            <div className="w-1/5  flex justify-center">
+                                <div className="relative flex h-full w-1 bg-blue-400 items-center justify-center">
+                                    <div className="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
                                         <div>07/08</div>
 
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-2/5 px-2 py-10 ">
-                                <div class="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
-                                    <div class="text-gray-600 mb-2 flex justify-between">
-                                        <div class="font-bold">
+                            <div className="w-2/5 px-2 py-10 ">
+                                <div className="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
+                                    <div className="text-gray-600 mb-2 flex justify-between">
+                                        <div className="font-bold">
                                             Nom
                                         </div>
                                     </div>
-                                    <div class="text-gray-600">
+                                    <div className="text-gray-600">
                                         Premier nom, logo et page d’accueil.
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-row w-full">
+                        <div className="flex flex-row w-full">
 
-                            <div class="w-2/5 px-2 py-5">
-                                <div class="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
-                                    <div class="text-gray-600 mb-2 flex justify-between">
-                                        <div class="font-bold">
+                            <div className="w-2/5 px-2 py-5">
+                                <div className="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
+                                    <div className="text-gray-600 mb-2 flex justify-between">
+                                        <div className="font-bold">
                                             Validation
                                         </div>
 
                                     </div>
-                                    <div class="text-gray-600">
+                                    <div className="text-gray-600">
                                         Nom et logo définitif de le plateforme, nom des séniors = Sages
 
 
@@ -250,34 +250,34 @@ function QuiSommes() {
 
                             </div>
 
-                            <div class="w-1/5  flex justify-center">
-                                <div class="relative flex h-full w-1 bg-blue-400 items-center justify-center">
-                                    <div class="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
+                            <div className="w-1/5  flex justify-center">
+                                <div className="relative flex h-full w-1 bg-blue-400 items-center justify-center">
+                                    <div className="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
                                         <div>14/08</div>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-row w-full">
-                            <div class="w-2/5 px-2 py-10">
+                        <div className="flex flex-row w-full">
+                            <div className="w-2/5 px-2 py-10">
                             </div>
-                            <div class="w-1/5  flex justify-center">
-                                <div class="relative flex h-full w-1 bg-blue-400 items-center justify-center">
-                                    <div class="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
+                            <div className="w-1/5  flex justify-center">
+                                <div className="relative flex h-full w-1 bg-blue-400 items-center justify-center">
+                                    <div className="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
                                         <div>02/09</div>
 
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-2/5 px-2 py-10 ">
-                                <div class="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
-                                    <div class="text-gray-600 mb-2 flex justify-between">
-                                        <div class="font-bold">
+                            <div className="w-2/5 px-2 py-10 ">
+                                <div className="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
+                                    <div className="text-gray-600 mb-2 flex justify-between">
+                                        <div className="font-bold">
                                             Utilisateurs
                                         </div>
                                     </div>
-                                    <div class="text-gray-600">
+                                    <div className="text-gray-600">
                                         Nom des clients = Apprentis <br /> Duo d’ Apprentis-Sages
 
 
@@ -285,51 +285,51 @@ function QuiSommes() {
                                 </div>
                             </div>
                         </div>
-                             <div class="flex flex-row w-full">
+                             <div className="flex flex-row w-full">
 
-                            <div class="w-2/5 px-2 py-5">
-                                <div class="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
-                                    <div class="text-gray-600 mb-2 flex justify-between">
-                                        <div class="font-bold">
+                            <div className="w-2/5 px-2 py-5">
+                                <div className="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
+                                    <div className="text-gray-600 mb-2 flex justify-between">
+                                        <div className="font-bold">
                                             Coût
                                         </div>
 
                                     </div>
-                                    <div class="text-gray-600">
+                                    <div className="text-gray-600">
                                     Coûts et ressources, Définition de la stratégie de communication
                                     </div>
                                 </div>
 
                             </div>
 
-                            <div class="w-1/5  flex justify-center">
-                                <div class="relative flex h-full w-1 bg-blue-400 items-center justify-center">
-                                    <div class="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
+                            <div className="w-1/5  flex justify-center">
+                                <div className="relative flex h-full w-1 bg-blue-400 items-center justify-center">
+                                    <div className="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
                                         <div>Fin septembre</div>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="flex flex-row w-full">
-                            <div class="w-2/5 px-2 py-10">
+                        <div className="flex flex-row w-full">
+                            <div className="w-2/5 px-2 py-10">
                             </div>
-                            <div class="w-1/5  flex justify-center">
-                                <div class="relative flex h-full w-1 bg-blue-400 items-center justify-center">
-                                    <div class="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
+                            <div className="w-1/5  flex justify-center">
+                                <div className="relative flex h-full w-1 bg-blue-400 items-center justify-center">
+                                    <div className="absolute flex flex-col justify-center h-24 w-24 rounded-full border-2 border-blue-400 leading-none text-center z-10 bg-white font-thin">
                                         <div>Aujourd'hui</div>
 
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-2/5 px-2 py-10 ">
-                                <div class="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
-                                    <div class="text-gray-600 mb-2 flex justify-between">
-                                        <div class="font-bold">
+                            <div className="w-2/5 px-2 py-10 ">
+                                <div className="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
+                                    <div className="text-gray-600 mb-2 flex justify-between">
+                                        <div className="font-bold">
                                             Et maintenant
                                         </div>
                                     </div>
-                                    <div class="text-gray-600">
+                                    <div className="text-gray-600">
                                     Ravie de vous partager notre expérience
                                     </div>
                                 </div>
