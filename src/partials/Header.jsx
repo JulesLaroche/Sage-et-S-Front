@@ -128,7 +128,7 @@ function Header() {
                 </a>
               </li>
               <li>
-                <a href="/chat" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                <a href="/messagerie" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                   Messagerie
                 </a>
               </li>
@@ -224,7 +224,7 @@ function Header() {
                     <Link to="/mes-annonces" className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out">Liste de mes annonces</Link>
                   </li>
                   <li>
-                    <Link to="/chat" className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out">Messagerie</Link>
+                    <Link to="/messagerie" className="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out">Messagerie</Link>
                   </li>
                   <li>
                     <Link to="/" className="font-medium w-full inline-flex items-center justify-center border border-transparent px-4 py-2 my-2 rounded-sm text-white bg-purple-800 hover:bg-purple-700 transition duration-150 ease-in-out" onClick={handleLogout}>Deconnexion</Link>

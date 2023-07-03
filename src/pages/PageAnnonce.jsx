@@ -10,6 +10,10 @@ function Annonce() {
   const navigate = useNavigate();
   const userId = localStorage.getItem('id');
 
+  const handleDiscuterClick = () => {
+    navigate(`/chat/${user.id}`);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -84,15 +88,22 @@ function Annonce() {
                         className="object-cover w-12 h-12 rounded-full"
                       />
                     </div>
+                    <button
+                      className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-5 rounded'
+                      type='button'
+                      onClick={handleDiscuterClick}
+                    >
+                      Discuter avec <span>{user.firstname}</span>
+                    </button>
 
-                    {userId === annonce.user_id && (
+                    {/* {userId === annonce.user_id && (
                       <a
                         href={`http://localhost:5173/modifier-annonces?id=${annonce.id}`}
                         className="inline-block px-2 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs"
                       >
                         Modifier l'annonce
                       </a>
-                    )}
+                    )} */}
                   </div>
                 </div>
               </div>

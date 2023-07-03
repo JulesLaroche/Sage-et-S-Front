@@ -8,12 +8,12 @@ function QuiSommes() {
                 <div className="py-12 md:py-8">
 
                     <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-                        <h1 className="h1 mb-4">Qui sommes nous ?</h1>
+                        <h1 className="h1 text-gray-700 mb-4">Qui sommes nous ?</h1>
                         {/* <p className="text-xl text-gray-400">Des services de proximité par des séniors qualifiés.</p> */}
                     </div>
 
 
-                    <p className="text-justify h4 mb-2 pb-12 first-letter:text-2.5xl first-letter:font-bold first-letter:text-gray-900 dark:first-letter:text-gray-100 first-letter:float-left">Nous sommes deux femmes entrepreneuses ayant la volonté de simplifier les tâches de la vie quotidienne, tout en permettant aux séniors de la ville de Toulon de transmettre leurs savoirs et compétences. Rien de mieux que de trouver conseils auprès de personnes expérimentées et pleines de sagesse.</p>
+                    <p className="text-justify h4 mb-2 pb-12 first-letter:text-2.5xl first-letter:font-bold first-letter:text-gray-900  dark:first-letter:text-gray-100 first-letter:float-left">Nous sommes deux femmes entrepreneuses ayant la volonté de simplifier les tâches de la vie quotidienne, tout en permettant aux séniors de la ville de Toulon de transmettre leurs savoirs et compétences. Rien de mieux que de trouver conseils auprès de personnes expérimentées et pleines de sagesse.</p>
                     <div className="max-w-sm mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-2 lg:gap-16 items-start md:max-w-2xl lg:max-w-none" data-aos-id-blocks>
 
                         {/* 1st item */}

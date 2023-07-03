@@ -67,7 +67,7 @@ function ListeDesAnnonces() {
             <div className="py-12 md:py-8">
               {/* Section header */}
               <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-                <h1 className="h1 mb-4">Liste des annonces</h1>
+                <h1 className="h1 text-gray-700 mb-4">Liste des annonces</h1>
               </div>
               <body className="antialiased  text-gray-900 font-sans p-6  ">
                 <div className="my-2 flex sm:flex-row flex-col">
@@ -136,6 +136,12 @@ function ListeDesAnnonces() {
                                 alt="Profile Image"
                                 className="object-cover w-12 h-12 rounded-full"
                               />
+                              {/* <button
+                                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-5 rounded'
+                                type='submit'
+                              >
+                                Discuter avec <span>{getUserFirstname(annonce.user_id)}</span>
+                              </button> */}
                             </div>
                           </div>
                         </div>

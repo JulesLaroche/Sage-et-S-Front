@@ -24,6 +24,7 @@ import ListeDesAnnonces from './pages/ListeDesAnnonces';
 import Page404 from './pages/404';
 import Annonce from './pages/PageAnnonce';
 import Chat from './pages/Chat';
+import Messagerie from './pages/Messagerie';
 
 function App() {
 
@@ -61,7 +62,9 @@ function App() {
         <Route path="*" element={<Page404 />} />
         {/* <Route exact path="*" ><redirect to="/404"/></Route> */}
         <Route path="/annonce/:id" element={<Annonce />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route path="/chat/:id" element={<Chat />} />
+        <Route path="/messagerie" element={<Messagerie />} />
+
       </Routes>
     </>
   );

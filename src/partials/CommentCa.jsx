@@ -14,7 +14,7 @@ function CommentCaText() {
 
           {/* Section header */}
           <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-            <h1 className="h1 mb-4">Ce que nous proposons</h1>
+            <h1 className="h1 text-gray-700 mb-4">Ce que nous proposons</h1>
             <p className="text-xl text-gray-400">Des services de proximité par des séniors qualifiés.</p>
           </div>
 

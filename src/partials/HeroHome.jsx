@@ -41,7 +41,7 @@ function HeroHome() {
         <div className="relative pt-32 pb-10 md:pt-40 md:pb-1">
           {/* Section header */}
           <div className="max-w-4xl mx-auto text-center pb-8 md:pb-8">
-            <h1 className="h1 mb-4" data-aos="fade-up">
+            <h1 className="h1 mb-4 text-gray-700" data-aos="fade-up">
             Sages & S <br /> la plateforme qui vous met en lien
             </h1>
             <p className="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">
