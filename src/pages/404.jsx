@@ -1,16 +1,9 @@
 import React from 'react';
 
-import Header from '../partials/Header';
 import PageIllustration from '../partials/PageIllustration';
-import HeroHome from '../partials/HeroHome';
-import FeaturesBlocks from '../partials/FeaturesBlocks';
-import FeaturesZigZag from '../partials/FeaturesZigzag';
-import Testimonials from '../partials/Testimonials';
-import Newsletter from '../partials/Newsletter';
-
+import Cookies from '../partials/cookies';
 import Footer from '../partials/Footer';
-import Formulaire from '../partials/Formulaire';
-import QuiSommes from '../partials/QuiSommes';
+
 
 
 function Page404() {
@@ -35,16 +28,16 @@ function Page404() {
                             <p className="mt-4 text-gray-500 dark:text-gray-400">La page que vous recherchez n'existe pas. Voici un lien pour vous rediriger:</p>
 
                             <div className="flex items-center w-full mt-6 gap-x-3 shrink-0 sm:w-auto">
-                               
 
-                                <button className="w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600"onClick={() => { window.location.href = '/'; }}>
+
+                                <button className="w-1/2 px-5 py-2 text-sm tracking-wide text-white transition-colors duration-200 bg-blue-500 rounded-lg shrink-0 sm:w-auto hover:bg-blue-600 dark:hover:bg-blue-500 dark:bg-blue-600" onClick={() => { window.location.href = '/'; }}>
                                     Retour Accueil
                                 </button>
                             </div>
                         </div>
                     </div>
                 </section>
-
+                <Cookies />
             </main>
 
 

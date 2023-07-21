@@ -25,6 +25,11 @@ import Page404 from './pages/404';
 import Annonce from './pages/PageAnnonce';
 import Chat from './pages/Chat';
 import Messagerie from './pages/Messagerie';
+import PolitiqueCookie from './pages/PolitiqueCookie';
+import Faq from './pages/Faq';
+import Charte from './pages/Charte';
+
+
 
 function App() {
 
@@ -64,6 +69,10 @@ function App() {
         <Route path="/annonce/:id" element={<Annonce />} />
         <Route path="/chat/:id" element={<Chat />} />
         <Route path="/messagerie" element={<Messagerie />} />
+        <Route path="/service/:id" component={ModifAnnonce} />
+        <Route path="/politique" element={<PolitiqueCookie />} />
+        <Route path="/charte" element={<Charte />} />
+        <Route path="/faq" element={<Faq />} />
 
       </Routes>
     </>

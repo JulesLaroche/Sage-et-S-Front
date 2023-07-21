@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PageIllustration from '../partials/PageIllustration';
 import Footer from '../partials/Footer';
+import Cookies from '../partials/cookies';
 
 function ListeDesAnnonces() {
   const [annonces, setAnnonces] = useState([]);
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
-
+  const token = localStorage.getItem('token');
   useEffect(() => {
     const userId = localStorage.getItem('id');
     if (!userId) {
@@ -19,6 +20,7 @@ function ListeDesAnnonces() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
     })
       .then((response) => response.json())
@@ -29,6 +31,7 @@ function ListeDesAnnonces() {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
           },
         })
           .then((response) => response.json())
@@ -136,19 +139,10 @@ function ListeDesAnnonces() {
                                 alt="Profile Image"
                                 className="object-cover w-12 h-12 rounded-full"
                               />
-                              {/* <button
-                                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-5 rounded'
-                                type='submit'
-                              >
-                                Discuter avec <span>{getUserFirstname(annonce.user_id)}</span>
-                              </button> */}
                             </div>
                           </div>
                         </div>
                       </Link>
-                      {/* {userId == annonce.user_id && (
-                        <a href={`http://localhost:5173/modifier-annonces?id=${annonce.id}`} className="inline-block px-2 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs">Modifier l'annonce</a>
-                      )} */}
                     </div>
                   ))}
                 </div>
@@ -156,6 +150,8 @@ function ListeDesAnnonces() {
             </div>
           </div>
         </section>
+
+        <Cookies />
       </main>
 
       {/* Site footer */}

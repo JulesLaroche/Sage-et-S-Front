@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import PageIllustration from './PageIllustration';
-import Footer from './Footer';
+
 
 function MesAnnonces() {
   const [annonces, setAnnonces] = useState([]);
@@ -11,6 +10,7 @@ function MesAnnonces() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const token = localStorage.getItem('token');
     // Vérifier si l'ID utilisateur est présent dans le local storage
     const userId = localStorage.getItem('id');
     if (!userId) {
@@ -21,6 +21,9 @@ function MesAnnonces() {
     fetch(`http://localhost:3001/users/${userId}`, {
       credentials: 'include',
       method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
     })
       .then((response) => response.json())
       .then((data) => {

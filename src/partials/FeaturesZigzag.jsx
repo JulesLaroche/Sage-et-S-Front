@@ -90,9 +90,6 @@ function FeaturesZigzag() {
                 </div>
               </div>
             </div>
-
-           
-
           </div>
 
         </div>

@@ -72,20 +72,20 @@ function HeroHome() {
           <div className="relative flex flex-col lg:flex-col justify-between items-center">
 
             {/* CTA content */}
-            <div className="mb-6  lg:mb-0 text-center lg:text-center lg:w-3/4">
+            {/* <div className="mb-6  lg:mb-0 text-center lg:text-center lg:w-3/4">
               <h3 className="h3 text-purple-600 mb-2">Recherchez un service</h3>
               <p className="text-purple-400 text-sm pb-4">Besoin d'une aide en cuisine, ou d'une réparation sur votre voiture dans l'aire toulonaise.</p>
-            </div>
+            </div> */}
 
             {/* CTA form */}
-            <form className="w-full lg:w-1/2">
-              <div className="flex flex-col sm:flex-row justify-center max-w-xs mx-auto sm:max-w-md lg:max-w-none">
+            {/* <form className="w-full lg:w-1/2">
+              {/* <div className="flex flex-col sm:flex-row justify-center max-w-xs mx-auto sm:max-w-md lg:max-w-none">
                 <input type="text" className="w-80 appearance-none bg-purple-700 border border-purple-500 focus:border-purple-300 rounded-sm px-4 py-3 mb-2 sm:mb-0 sm:mr-2 text-white placeholder-white" placeholder="Mécanique, plats cuisinés, Toulon, Saint jean..." aria-label="Your best email…" />
                 <a className="btn text-purple-600 bg-purple-200 hover:bg-white shadow" href="#0">Rechercher</a>
-              </div>
+              </div> */}
               {/* Success message */}
               {/* <p className="text-center lg:text-left lg:absolute mt-2 opacity-75 text-sm">Thanks for subscribing!</p> */}
-            </form>
+            {/*</form> */}
 
           </div>
 

@@ -10,7 +10,7 @@ function FeaturesBlocks() {
           <div className="max-w-5xl mx-auto text-center pb-12 md:pb-20">
             <h2 className="h2 mb-4">La plateforme toulonnaise de mise en lien entre des seniors désireux de transmettre leurs compétences et une personne ayant un besoin dans la vie quotidien.</h2>
             <p className="text-xl text-gray-400">Sages& S vous permet de trouver une relation humaine et une aide personnalisée
-dans différents domaines : jardinage, bricolage, couture, mécanique…</p>
+              dans différents domaines : jardinage, bricolage, couture, mécanique…</p>
           </div>
 
           {/* Items */}

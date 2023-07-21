@@ -3,6 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import PageIllustration from '../partials/PageIllustration';
 import Footer from '../partials/Footer';
 import MesAnnonces from '../partials/MesAnnonces';
+import Cookies from '../partials/cookies';
+
 
 function Account() {
   const [firstName, setFirstName] = useState('');
@@ -54,7 +56,7 @@ function Account() {
     navigate('/mes-annonces');
   };
 
-  
+
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
       {/* Site header */}
@@ -108,33 +110,27 @@ function Account() {
 
                   <div className="mt-20 text-center border-b pb-12">
                     <h1 className="text-4xl font-medium text-gray-700 uppercase">
-                      {firstName} {lastName} <span className="font-light text-gray-500  text-red-500 font-bold">{category}</span>
+                      {firstName} {lastName} <span className="font-light text-gray-500">{category}</span>
                     </h1>
                     <p className="font-light text-gray-600 mt-3">
                       {address} {postalCode} {city}
                     </p>
-                    {/* 
-              <p className="mt-8 text-gray-500">Jardinier</p>
-              <p className="mt-2 text-gray-500">Cuisinier</p> */}
                   </div>
 
                   <div className="mt-12 flex flex-col justify-center">
                     <p className="text-gray-600 text-center font-light lg:px-16">{content}</p>
-                    {/* <button className="text-indigo-500 py-2 px-4  font-medium mt-4">
-                Show more
-              </button> */}
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div id="liste-annonces">
-          <MesAnnonces/>
+            <MesAnnonces />
           </div>
         </section>
+        <Cookies />
       </main>
 
-      {/* Site footer */}
       <Footer />
     </div>
   );

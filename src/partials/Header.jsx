@@ -1,12 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import Dropdown from '../utils/Dropdown';
+
 function Header() {
 
   const [name, setName] = useState("")
   const id = localStorage.getItem("id");
 
   useEffect(() => {
+
     if (id) {
       fetch(`http://localhost:3001/users/${id}`, {
         credentials: "include",
@@ -76,6 +77,7 @@ function Header() {
   const handleLogout = () => {
     // Supprimer les données de local storage
     localStorage.removeItem("id");
+    localStorage.removeItem("token");
     // Autres actions de déconnexion si nécessaire
     // Actualiser la page
     window.location.href = 'http://localhost:5173/';
@@ -89,62 +91,71 @@ function Header() {
   if (isLoggedIn) {
     button = (
       <>
-        <div className="relative">
-          <button
-            data-dropdown-toggle="dropdown"
-            className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-            onClick={handleDropdownToggle}
-            ref={trigger}
-          >
-            Bonjour {name}
-            <svg
-              className={`w-4 h-4 ml-2 ${drop ? "transform rotate-180" : ""}`}
-              aria-hidden="true"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
-            </svg>
-          </button>
-          <div
-            className={`z-10 ${drop ? "block" : "hidden"} bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute`}
-            style={{ top: menuPosition.top, left: menuPosition.left }}
-          >
-            <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
-              <li>
-                <a href="/compte" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                  Mon compte
-                </a>
-              </li>
-              <li>
-                <a href="/deposer-une-annonce" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                  Déposer une annonce
-                </a>
-              </li>
-              <li>
-                <a href="/compte#liste-annonces" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                  Liste de mes annonces
-                </a>
-              </li>
-              <li>
-                <a href="/messagerie" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-                  Messagerie
-                </a>
-              </li>
-
-              <li>
-                <a
-                  href="#"
-                  className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                  onClick={handleLogout}
+        <ul className="flex grow justify-end flex-wrap items-center" >
+          <li>
+            <a className="btn-sm text-purple-600 ml-3">Bonjour {name}</a>
+          </li>
+          <li>
+            <div className="relative">
+              <button
+                data-dropdown-toggle="dropdown"
+                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                onClick={handleDropdownToggle}
+                ref={trigger}
+              >
+                Mon compte
+                <svg
+                  className={`w-4 h-4 ml-2 ${drop ? "transform rotate-180" : ""}`}
+                  aria-hidden="true"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
                 >
-                  Deconnexion
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div
+                className={`z-10 ${drop ? "block" : "hidden"} bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute`}
+                style={{ top: menuPosition.top, left: menuPosition.left }}
+              >
+                <ul className="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                  <li>
+                    <a href="/compte" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                      Mes informations
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/deposer-une-annonce" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                      Déposer une annonce
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/compte#liste-annonces" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                      Liste de mes annonces
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/messagerie" className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                      Messagerie
+                    </a>
+                  </li>
+
+                  <li>
+                    <a
+                      href="#"
+                      className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                      onClick={handleLogout}
+                    >
+                      Deconnexion
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li>
+
+        </ul>
+
       </>
     )
   } else {
@@ -163,7 +174,7 @@ function Header() {
 
   return (
     <header className="fixed w-full z-30 py-3 bg-white bg-opacity-80 backdrop-blur-md">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
 
           {/* Site branding */}

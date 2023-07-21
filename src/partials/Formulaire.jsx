@@ -14,7 +14,7 @@ function Formulaire() {
   const [postal_code, setPostal_code] = useState('');
   const [city, setCity] = useState('');
   const [img_name, setImageName] = useState('');
-
+  const [userCategory, setUserCategory] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -30,7 +30,8 @@ function Formulaire() {
       .then((data) => {
         const { category } = data;
 
-        setCategory(category);
+        setUserCategory(category);
+
 
       })
       .catch((error) => console.error(error));
@@ -50,6 +51,7 @@ function Formulaire() {
     // Créer un objet FormData pour envoyer les données avec la photo
     const formData = new FormData();
     formData.append('file', img_name);
+    const token = localStorage.getItem('token'); // Récupérer le token depuis le stockage local
 
     fetch('http://localhost:3001/upload-annonce-photo', {
       method: 'POST',
@@ -62,7 +64,7 @@ function Formulaire() {
 
         const body = {
           title,
-          type:category == 'apprenti' ? 'apprenti' : 'sage',
+          type: userCategory,
           category,
           description,
           price,
@@ -78,6 +80,7 @@ function Formulaire() {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
           },
           body: JSON.stringify(body),
         })
@@ -85,7 +88,7 @@ function Formulaire() {
             if (response.ok) {
               console.log('Annonce déposée avec succès');
               // Effectuer des actions supplémentaires après le dépôt de l'annonce réussi
-              window.location.href = '/mes-annonces';
+              window.location.href = '/compte#liste-annonces';
             }
           })
           .catch((error) => console.error(error));
@@ -120,7 +123,7 @@ function Formulaire() {
                   <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mt-3 mb-2'>Type d'annonce:</label>
                   <div className="flex-shrink w-full inline-block relative">
                     <h1 className="font-bold text-red-600 ">
-                      {category === "apprenti"
+                      {userCategory === "apprenti"
                         ? "Annonce pour demander un service"
                         : "Annonce pour proposer un service"}
                     </h1>

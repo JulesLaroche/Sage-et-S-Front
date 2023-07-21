@@ -285,7 +285,7 @@ function QuiSommes() {
                                 </div>
                             </div>
                         </div>
-                             <div className="flex flex-row w-full">
+                        <div className="flex flex-row w-full">
 
                             <div className="w-2/5 px-2 py-5">
                                 <div className="flex flex-col w-full rounded-lg shadow bg-gray-100 px-4 py-5">
@@ -296,7 +296,7 @@ function QuiSommes() {
 
                                     </div>
                                     <div className="text-gray-600">
-                                    Coûts et ressources, Définition de la stratégie de communication
+                                        Coûts et ressources, Définition de la stratégie de communication
                                     </div>
                                 </div>
 
@@ -330,7 +330,7 @@ function QuiSommes() {
                                         </div>
                                     </div>
                                     <div className="text-gray-600">
-                                    Ravie de vous partager notre expérience
+                                        Ravie de vous partager notre expérience
                                     </div>
                                 </div>
                             </div>

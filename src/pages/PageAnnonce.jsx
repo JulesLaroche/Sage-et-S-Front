@@ -95,15 +95,6 @@ function Annonce() {
                     >
                       Discuter avec <span>{user.firstname}</span>
                     </button>
-
-                    {/* {userId === annonce.user_id && (
-                      <a
-                        href={`http://localhost:5173/modifier-annonces?id=${annonce.id}`}
-                        className="inline-block px-2 py-1 leading-none bg-orange-200 text-orange-800 rounded-full font-semibold uppercase tracking-wide text-xs"
-                      >
-                        Modifier l'annonce
-                      </a>
-                    )} */}
                   </div>
                 </div>
               </div>

@@ -1,18 +1,16 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import Header from '../partials/Header';
 import PageIllustration from '../partials/PageIllustration';
-
+import Cookies from '../partials/cookies';
 
 
 function SignIn() {
-
   const [form, setForm] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
-  }
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
   const login = async (e) => {
     e.preventDefault();
@@ -24,25 +22,37 @@ function SignIn() {
 
     fetch('http://localhost:3001/login', {
       method: 'POST',
-      mode: 'cors',
-      credentials: 'include',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+
       },
       body: JSON.stringify(body)
     })
       .then(async (response) => {
         if (response.ok) {
           const data = await response.json();
-          // Vérifier la réponse de votre API et effectuer les actions nécessaires en fonction de celle-ci
-          console.log(data); // Afficher la réponse pour le débogage
-
-          // Stocker l'ID de l'utilisateur dans le stockage local
           localStorage.setItem('id', data.userId);
+          localStorage.setItem('token', data.token);
+          console.log(localStorage.getItem('token'));
+          const token = localStorage.getItem('token'); // Récupérer le token depuis le stockage local
 
-          // Rediriger vers la page d'accueil
+          fetch('http://localhost:3001/autre-endpoint', {
+            method: 'GET',
+            headers: {
+              'Authorization': 'Bearer ' + token
+
+            }
+          })
+            .then((response) => {
+              // Traiter la réponse de l'autre endpoint
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+
           window.location.href = '/';
         } else {
+          console.log(token);
           console.log('Identifiants invalides');
           setErrorMessage('Utilisateur ou mot de passe invalide');
         }
@@ -93,10 +103,6 @@ function SignIn() {
                   <div className="flex flex-wrap -mx-3 mb-4">
                     <div className="w-full px-3">
                       <div className="flex justify-between">
-                        {/* <label className="flex items-center">
-                          <input type="checkbox" className="form-checkbox" />
-                          <span className="text-gray-400 ml-2">Gardez moi connecté</span>
-                        </label> */}
                         <Link to="/reset-password" className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out">Mot de passe oublié?</Link>
                       </div>
                     </div>
@@ -119,6 +125,7 @@ function SignIn() {
           </div>
         </section>
 
+        <Cookies />
       </main>
 
     </div>

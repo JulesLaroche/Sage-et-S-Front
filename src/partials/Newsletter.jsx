@@ -17,11 +17,12 @@ function Newsletter() {
       phone,
       message
     };
-
+    const token = localStorage.getItem('token');
     fetch('http://localhost:3001/contact', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(body),
     })

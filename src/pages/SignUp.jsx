@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
-import Header from '../partials/Header';
 import PageIllustration from '../partials/PageIllustration';
-
+import Cookies from '../partials/cookies';
 
 
 function SignUp() {
@@ -16,12 +15,12 @@ function SignUp() {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
   let errorMessage = "";
-  
 
-  const register = async (e) => { 
-    e.preventDefault(); 
+
+  const register = async (e) => {
+    e.preventDefault();
     let passwd = "";
-    if(form.check == false) return errorMessage = "Vous devez cocher les confitions d'utilisation."
+    if (form.check == false) return errorMessage = "Vous devez cocher les confitions d'utilisation."
     if (form.password1 == form.password2) {
       passwd = form.password1;
     } else return errorMessage = "Veuillez mettre les mêmes mots de passes !";
@@ -48,8 +47,8 @@ function SignUp() {
         window.location.href = '/signin';
       }
     })
-    .catch(error => console.error(error));
-    
+      .catch(error => console.error(error));
+
   }
 
 
@@ -99,10 +98,10 @@ function SignUp() {
                     <div className="w-full px-3">
                       <label className="block text-gray-600 text-sm font-medium mb-1" htmlFor="category">Vous êtes: <span className="text-red-600">*</span></label>
                       <select className="block appearance-none text-gray-600 w-full bg-white border border-gray-600 shadow-inner px-4 py-2 pr-8 " required name="category" onChange={handleChange}>
-                                            <option value="">Choisir...</option>
-                                            <option value="Apprenti">Apprenti en demande de services</option>
-                                            <option value="Sage">Sage pour partager mon savoir</option>
-                                        </select>
+                        <option value="">Choisir...</option>
+                        <option value="Apprenti">Apprenti en demande de services</option>
+                        <option value="Sage">Sage pour partager mon savoir</option>
+                      </select>
                     </div>
                   </div>
                   <div className="flex flex-wrap -mx-3 mb-4">
@@ -129,7 +128,7 @@ function SignUp() {
                   </div>
                   <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
-                      <button type="submit"  className="btn  text-white bg-purple-600 hover:bg-purple-700 w-full">
+                      <button type="submit" className="btn  text-white bg-purple-600 hover:bg-purple-700 w-full">
                         S'enregistrer
                       </button>
                     </div>
@@ -143,6 +142,7 @@ function SignUp() {
           </div>
         </section>
 
+        <Cookies />
       </main>
 
     </div>

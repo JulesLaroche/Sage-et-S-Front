@@ -1,13 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import Header from '../partials/Header';
 import PageIllustration from '../partials/PageIllustration';
-import HeroHome from '../partials/HeroHome';
-import FeaturesBlocks from '../partials/FeaturesBlocks';
-import FeaturesZigZag from '../partials/FeaturesZigzag';
-import Testimonials from '../partials/Testimonials';
-import Newsletter from '../partials/Newsletter';
-
+import Cookies from '../partials/cookies';
 import Footer from '../partials/Footer';
 import Formulaire from '../partials/Formulaire';
 
@@ -24,21 +18,21 @@ function DeposerUneAnnonce() {
       navigate('/signup');
     }
   }, []);
-  
-    return (
 
-      
-      <div className="flex flex-col min-h-screen overflow-hidden">
+  return (
 
- 
-  
-        {/*  Page content */}
-        <main className="grow">
-          {/*  Page illustration */}
-          <div className="relative max-w-6xl mx-auto h-0 pointer-events-none" aria-hidden="true">
-            <PageIllustration />
-          </div>
-          <section className='relative pt-32 pb-10 md:pt-40 md:pb-1'>
+
+    <div className="flex flex-col min-h-screen overflow-hidden">
+
+
+
+      {/*  Page content */}
+      <main className="grow">
+        {/*  Page illustration */}
+        <div className="relative max-w-6xl mx-auto h-0 pointer-events-none" aria-hidden="true">
+          <PageIllustration />
+        </div>
+        <section className='relative pt-32 pb-10 md:pt-40 md:pb-1'>
           <div className='max-w-5xl mx-auto pb-8 md:pb-8'>
             <div className="py-12 md:py-8">
               {/* Section header */}
@@ -46,20 +40,21 @@ function DeposerUneAnnonce() {
                 <h1 className="h1">Déposer une annonce</h1>
               </div>
 
-          <Formulaire />
- 
-          </div>
+              <Formulaire />
+
+            </div>
           </div>
 
         </section>
 
-        </main>
-  
-  
-        {/*  Site footer */}
-        <Footer />
-      </div>
-    );
-  }
-  
-  export default DeposerUneAnnonce;
+        <Cookies />
+      </main>
+
+
+      {/*  Site footer */}
+      <Footer />
+    </div>
+  );
+}
+
+export default DeposerUneAnnonce;

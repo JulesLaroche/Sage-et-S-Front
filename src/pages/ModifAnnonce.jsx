@@ -2,12 +2,9 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
-import Header from '../partials/Header';
+
 import PageIllustration from '../partials/PageIllustration';
 import Footer from '../partials/Footer';
-
-
-
 
 function ModifAnnonce() {
 
@@ -24,23 +21,24 @@ function ModifAnnonce() {
   const [img_name, setImageName] = useState("");
 
   const navigate = useNavigate();
-  // const { id } = useParams();
+  //  const { id } = useParams();
 
   const handleDelete = () => {
     // Vérifier si l'ID utilisateur est présent dans le local storage
     const userId = localStorage.getItem('id');
     if (!userId) {
       // Rediriger vers la page d'inscription si l'ID utilisateur n'est pas trouvé
-      navigate('/signup');
+      navigate('/compte');
       return;
     }
-  
+    const token = localStorage.getItem('token');
     // Envoyer une requête DELETE à l'API pour supprimer l'annonce
     fetch(`http://localhost:3001/service/${id}`, {
       credentials: 'include',
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify({ user_id: userId }),
     })
@@ -57,6 +55,7 @@ function ModifAnnonce() {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const id = searchParams.get('id');
+
 
   // Ajoutez la fonction pour gérer le changement de fichier sélectionné
   const handleFileChange = (event) => {
@@ -75,7 +74,7 @@ function ModifAnnonce() {
     }
 
     // Récupérer les informations de l'annonce depuis l'API en utilisant l'ID
-    fetch(`http://localhost:3001/service/${id}`)
+    fetch(`http://localhost:3001/service/edit/${id}`)
       .then(response => response.json())
       .then(data => {
         // Mettre à jour les valeurs des champs de formulaire avec les informations récupérées
@@ -209,17 +208,18 @@ function ModifAnnonce() {
                                 onChange={(e) => setCategory(e.target.value)}
                               >
                                 <option>Choisir...</option>
+                                <option>Services à la personne</option>
+                                <option>Cuisine</option>
+                                <option>Travaux</option>
+                                <option>Cours et formations</option>
+                                <option>Enfants</option>
+                                <option>Bricolage et déco </option>
+                                <option>Mécanique</option>
+                                <option>Photo et Audio-vidéo</option>
                                 <option>Jardinage</option>
-                                <option>Cuisine</option>
-                                <option>Cuisine</option>
-                                <option>Cuisine</option>
-                                <option>Cuisine</option>
-                                <option>Cuisine</option>
-                                <option>Cuisine</option>
-                                <option>Cuisine</option>
-                                <option>Cuisine</option>
-                                <option>Cuisine</option>
-                                <option>Cuisine</option>
+                                <option>Administration et gestion</option>
+                                <option>Transport</option>
+                                <option>Apprendre à lire et ecrire</option>
                               </select>
                               <div className="pointer-events-none absolute top-0 mt-3  right-0 flex items-center px-2 text-gray-600"></div>
                             </div>
