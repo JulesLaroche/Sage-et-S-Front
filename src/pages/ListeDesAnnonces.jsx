@@ -3,12 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import PageIllustration from '../partials/PageIllustration';
 import Footer from '../partials/Footer';
 import Cookies from '../partials/cookies';
+import diacritics from 'diacritics';
 
 function ListeDesAnnonces() {
   const [annonces, setAnnonces] = useState([]);
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
   const token = localStorage.getItem('token');
+
+  // Etats locaux pour les filtres
+  const [categoryFilter, setCategoryFilter] = useState('');
+  const [typeFilter, setTypeFilter] = useState('');
+  const [keywordFilter, setKeywordFilter] = useState('');
+
   useEffect(() => {
     const userId = localStorage.getItem('id');
     if (!userId) {
@@ -53,54 +60,105 @@ function ListeDesAnnonces() {
     return user ? user.img_name : '';
   };
 
+
+
+  // Filtrer les annonces en fonction des filtres sélectionnés
+  const filteredAnnonces = annonces.filter((annonce) => {
+    // Filtrer par catégorie
+    if (categoryFilter && annonce.category !== categoryFilter) {
+      return false;
+    }
+
+    // Filtrer par type d'annonce (sage ou apprenti)
+    // Filtrer par type d'annonce (sage ou apprenti)
+    if (typeFilter === "Sage qui propose un service" && annonce.type !== "sage") {
+      return false;
+    }
+    if (typeFilter === "Apprenti qui demande un service" && annonce.type !== "apprenti") {
+      return false;
+    }
+
+    // Filtrer par mot-clé de recherche
+    if (keywordFilter) {
+      const normalizedKeyword = diacritics.remove(keywordFilter).toLowerCase();
+      const normalizedTitle = diacritics.remove(annonce.title).toLowerCase();
+
+      if (!normalizedTitle.includes(normalizedKeyword)) {
+        return false;
+      }
+    }
+
+    return true; // Conserver l'annonce si elle correspond à tous les filtres
+  });
+
+  // Fonctions de gestion des filtres
+  const handleCategoryFilterChange = (e) => {
+    setCategoryFilter(e.target.value);
+  };
+
+  const handleTypeFilterChange = (e) => {
+    setTypeFilter(e.target.value);
+  };
+
+  const handleKeywordFilterChange = (e) => {
+    setKeywordFilter(e.target.value);
+  };
+
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
-      {/* Site header */}
       {/* ... */}
 
-      {/* Page content */}
+      {/*  Page content */}
       <main className="grow">
-        {/* Page illustration */}
+        {/*  Page illustration */}
         <div className="relative max-w-6xl mx-auto h-0 pointer-events-none" aria-hidden="true">
           <PageIllustration />
         </div>
-
         <section className='relative pt-32 pb-10 md:pt-40 md:pb-1'>
           <div className='max-w-5xl mx-auto pb-8 md:pb-8'>
             <div className="py-12 md:py-8">
-              {/* Section header */}
-              <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
-                <h1 className="h1 text-gray-700 mb-4">Liste des annonces</h1>
+            <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
+                <h1 className="h1">Liste de nos annonces</h1>
               </div>
               <body className="antialiased  text-gray-900 font-sans p-6  ">
                 <div className="my-2 flex sm:flex-row flex-col">
                   <div className="flex flex-row mb-1 sm:mb-0">
                     <div className="relative">
                       <select
-                        className="appearance-none h-full rounded-l border block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                        <option>5</option>
-                        <option>10</option>
-                        <option>20</option>
+                        className="appearance-none h-full rounded-l border block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        value={categoryFilter}
+                        onChange={handleCategoryFilterChange}
+                      >
+                        <option value="">Toutes les catégories...</option>
+                        <option>Services à la personne</option>
+                        <option>Cuisine</option>
+                        <option>Travaux</option>
+                        <option>Cours et formations</option>
+                        <option>Enfants</option>
+                        <option>Bricolage et déco</option>
+                        <option>Mécanique</option>
+                        <option>Photo et Audio-vidéo</option>
+                        <option>Jardinage</option>
+                        <option>Administration et gestion</option>
+                        <option>Transport</option>
+                        <option>Apprendre à lire et ecrire</option>
                       </select>
                       <div
                         className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                        </svg>
                       </div>
                     </div>
-                    <div className="relative">
+                    <div className="relative ">
                       <select
-                        className="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500">
-                        <option>All</option>
-                        <option>Active</option>
-                        <option>Inactive</option>
+                        className="appearance-none h-full rounded-r border-t sm:rounded-r-none sm:border-r-0 border-r border-b block w-full bg-white border-gray-400 text-gray-700 py-2 px-4 pr-8 leading-tight focus:outline-none focus:border-l focus:border-r focus:bg-white focus:border-gray-500"
+                        value={typeFilter}
+                        onChange={handleTypeFilterChange}
+                      >
+                        <option value="">Tous les types d'annonces...</option>
+                        <option>Sage qui propose un service</option>
+                        <option>Apprenti qui demande un service</option>
                       </select>
                       <div
                         className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                        <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                          <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-                        </svg>
                       </div>
                     </div>
                   </div>
@@ -112,12 +170,16 @@ function ListeDesAnnonces() {
                         </path>
                       </svg>
                     </span>
-                    <input placeholder="Search"
-                      className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
+                    <input
+                      placeholder="Recherchez un mot ..."
+                      className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none"
+                      value={keywordFilter}
+                      onChange={handleKeywordFilterChange}
+                    />
                   </div>
                 </div>
                 <div className="container space-y-3">
-                  {annonces.map((annonce) => (
+                  {filteredAnnonces.map((annonce) => (
                     <div key={annonce.id}>
                       <Link to={`/annonce/${annonce.id}`} className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
                         <img srcSet={`http://localhost:3001/annonce_photos/${annonce.img_name}`} alt="Profile Image" className="object-cover w-full  rounded-lg  md:h-auto md:w-48 " />

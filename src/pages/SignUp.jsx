@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import PageIllustration from '../partials/PageIllustration';
 import Cookies from '../partials/cookies';
-
+import Footer from '../partials/Footer';
 
 function SignUp() {
   const [form, setForm] = useState({})
@@ -124,7 +124,7 @@ function SignUp() {
                   </div>
                   <div className="text-sm text-gray-500 text-center">
                     <input required type="checkbox" className='mr-1' name="" id="" />
-                    J'accepte les conditions de Sage & S <Link to="#" className="underline text-gray-400 hover:text-gray-200 hover:no-underline transition duration-150 ease-in-out">Privacy Policy</Link>.
+                    J'accepte les conditions de Sage & S:  <Link to="/charte" className="underline text-gray-400 hover:text-gray-200 hover:no-underline transition duration-150 ease-in-out"> Charte</Link> & <Link to="/politique" className="underline text-gray-400 hover:text-gray-200 hover:no-underline transition duration-150 ease-in-out"> Cookies</Link>.
                   </div>
                   <div className="flex flex-wrap -mx-3 mt-6">
                     <div className="w-full px-3">
@@ -144,7 +144,7 @@ function SignUp() {
 
         <Cookies />
       </main>
-
+      <Footer />
     </div>
   );
 }

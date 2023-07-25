@@ -58,7 +58,7 @@ function CommentCaText() {
               {/* Content */}
               <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6" data-aos="fade-right">
                 <div className="md:pr-4 lg:pr-12 xl:pr-16">
-                  <div className="font-architects-daughter text-xl text-purple-600 mb-2">More speed. Less spend</div>
+                  <div className="font-architects-daughter text-xl text-purple-600 mb-2">Des avantages exclusifs</div>
                   <h3 className="h3 mb-3">Activités gratuites</h3>
                   <p className="text-xl text-gray-400 mb-4">Réservées exclusivement aux Apprentis et aux Sages: </p>
                   <ul className="text-lg text-gray-400 -mb-2">
@@ -105,7 +105,7 @@ function CommentCaText() {
               {/* Content */}
               <div className="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6" data-aos="fade-left">
                 <div className="md:pl-4 lg:pl-12 xl:pl-16">
-                  <div className="font-architects-daughter text-xl text-purple-600 mb-2">Une aide de proximité</div>
+                  <div className="font-architects-daughter text-xl text-purple-600 mb-2">On vous prends par la main</div>
                   <h3 className="h3 mb-3">Programme d'accompagnement personnalisé</h3>
                   <p className="text-xl text-gray-400 mb-4">Parce qu'on est pas tous des pros des outils numériques, Sages&S vous accompagne à la prise en main de la plateforme par téléphone ou sur rendez-vous</p>
                 </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import PageIllustration from '../partials/PageIllustration';
-
+import Footer from '../partials/Footer';
 
 function ResetPassword() {
   return (
@@ -53,7 +53,7 @@ function ResetPassword() {
         </section>
 
       </main>
-
+      <Footer />
     </div>
   );
 }

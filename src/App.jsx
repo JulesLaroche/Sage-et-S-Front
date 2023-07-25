@@ -28,6 +28,8 @@ import Messagerie from './pages/Messagerie';
 import PolitiqueCookie from './pages/PolitiqueCookie';
 import Faq from './pages/Faq';
 import Charte from './pages/Charte';
+import Credits from './pages/Credits';
+
 
 
 
@@ -67,12 +69,14 @@ function App() {
         <Route path="*" element={<Page404 />} />
         {/* <Route exact path="*" ><redirect to="/404"/></Route> */}
         <Route path="/annonce/:id" element={<Annonce />} />
-        <Route path="/chat/:id" element={<Chat />} />
+        <Route path="/chat/:user_id" element={<Chat />} />
         <Route path="/messagerie" element={<Messagerie />} />
         <Route path="/service/:id" component={ModifAnnonce} />
         <Route path="/politique" element={<PolitiqueCookie />} />
         <Route path="/charte" element={<Charte />} />
         <Route path="/faq" element={<Faq />} />
+        <Route path="/credits" element={<Credits />} />
+   
 
       </Routes>
     </>

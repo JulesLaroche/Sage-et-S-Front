@@ -21,7 +21,7 @@ function Annonce() {
         if (response.ok) {
           const data = await response.json();
           setAnnonce(data);
-
+  
           // Fetch user data
           const userResponse = await fetch(`http://localhost:3001/users/${data.user_id}`);
           if (userResponse.ok) {
@@ -31,15 +31,16 @@ function Annonce() {
             setUser(null);
           }
         } else {
-          navigate('/404')
+          navigate('/404');
         }
       } catch (error) {
         console.error('Erreur :', error);
       }
     };
-
+  
     fetchData();
   }, [id]);
+ 
 
   if (!annonce || !user) {
     return <div>Loading...</div>;

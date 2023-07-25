@@ -148,7 +148,7 @@ function Profile() {
 
 
                             <div className="personal w-full ">
-                                <h2 className="text-2xl text-gray-900">Informations personnelles: <span className="font-light text-gray-500  text-red-500 font-bold">{category.charAt(0).toUpperCase() + category.slice(1)}</span> </h2>
+                                <h2 className="text-2xl text-gray-900">Informations personnelles: <span className="font-light text-gray-500">{category.charAt(0).toUpperCase() + category.slice(1)}</span> </h2>
                                 <div className="flex items-center justify-between mt-4 border-t border-gray-400 pt-4">
                                     <div className='w-full md:w-1/2 px-3 mb-6'>
                                         <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Prénom</label>

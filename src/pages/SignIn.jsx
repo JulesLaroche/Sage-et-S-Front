@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PageIllustration from '../partials/PageIllustration';
 import Cookies from '../partials/cookies';
-
+import Footer from '../partials/Footer';
 
 function SignIn() {
   const [form, setForm] = useState({});
@@ -20,48 +20,31 @@ function SignIn() {
       password: form.password
     };
 
-    fetch('http://localhost:3001/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-
-      },
-      body: JSON.stringify(body)
-    })
-      .then(async (response) => {
-        if (response.ok) {
-          const data = await response.json();
-          localStorage.setItem('id', data.userId);
-          localStorage.setItem('token', data.token);
-          console.log(localStorage.getItem('token'));
-          const token = localStorage.getItem('token'); // Récupérer le token depuis le stockage local
-
-          fetch('http://localhost:3001/autre-endpoint', {
-            method: 'GET',
-            headers: {
-              'Authorization': 'Bearer ' + token
-
-            }
-          })
-            .then((response) => {
-              // Traiter la réponse de l'autre endpoint
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-
-          window.location.href = '/';
-        } else {
-          console.log(token);
-          console.log('Identifiants invalides');
-          setErrorMessage('Utilisateur ou mot de passe invalide');
-        }
-      })
-      .catch((error) => {
-        console.error(error);
+    try {
+      const response = await fetch('http://localhost:3001/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+        credentials: 'include', // Inclure les cookies dans la requête
       });
-  };
 
+      console.log("test front 1");
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('id', data.userId);
+        // Rediriger l'utilisateur vers la page d'accueil après la connexion
+        window.location.href = '/';
+      } else {
+        console.log("test front 2");
+        console.log('Identifiants invalides');
+        setErrorMessage('Utilisateur ou mot de passe invalide');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
@@ -127,7 +110,7 @@ function SignIn() {
 
         <Cookies />
       </main>
-
+      <Footer />
     </div>
   );
 }
