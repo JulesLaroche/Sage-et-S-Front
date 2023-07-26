@@ -47,7 +47,7 @@ function Credits() {
                 </div>
                 {/* Affichage des crédits de l'utilisateur */}
                 <div className="max-w-6xl mx-auto text-center pb-12 md:pb-16">
-                  <a className="block w-full max-w-md p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                  <a className="block w-full max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                     <span className="text-7xl mb-4" role="img" aria-label="Coeur">
                       ❤️
                     </span>

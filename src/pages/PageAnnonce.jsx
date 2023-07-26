@@ -11,8 +11,9 @@ function Annonce() {
   const userId = localStorage.getItem('id');
 
   const handleDiscuterClick = () => {
-    navigate(`/chat/${user.id}`);
+    navigate(`/chat/${user.id}/${annonce.id}`);
   };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,7 +22,7 @@ function Annonce() {
         if (response.ok) {
           const data = await response.json();
           setAnnonce(data);
-  
+
           // Fetch user data
           const userResponse = await fetch(`http://localhost:3001/users/${data.user_id}`);
           if (userResponse.ok) {
@@ -37,10 +38,10 @@ function Annonce() {
         console.error('Erreur :', error);
       }
     };
-  
+
     fetchData();
   }, [id]);
- 
+
 
   if (!annonce || !user) {
     return <div>Loading...</div>;
@@ -89,13 +90,15 @@ function Annonce() {
                         className="object-cover w-12 h-12 rounded-full"
                       />
                     </div>
-                    <button
-                      className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-5 rounded'
-                      type='button'
-                      onClick={handleDiscuterClick}
-                    >
-                      Discuter avec <span>{user.firstname}</span>
-                    </button>
+                    {user.id == userId ? null : ( // Vérifier si l'ID de l'utilisateur est différent de l'ID du local storage
+                      <button
+                        className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mt-5 rounded'
+                        type='button'
+                        onClick={handleDiscuterClick}
+                      >
+                        Discuter avec <span>{user.firstname}</span>
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>

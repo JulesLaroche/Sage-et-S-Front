@@ -69,7 +69,7 @@ function App() {
         <Route path="*" element={<Page404 />} />
         {/* <Route exact path="*" ><redirect to="/404"/></Route> */}
         <Route path="/annonce/:id" element={<Annonce />} />
-        <Route path="/chat/:user_id" element={<Chat />} />
+        <Route path="/chat/:user_id/:service_id" element={<Chat />} />
         <Route path="/messagerie" element={<Messagerie />} />
         <Route path="/service/:id" component={ModifAnnonce} />
         <Route path="/politique" element={<PolitiqueCookie />} />

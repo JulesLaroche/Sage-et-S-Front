@@ -6,17 +6,20 @@ import Cookies from '../partials/cookies';
 import Footer from '../partials/Footer';
 import { fr } from 'date-fns/locale';
 
+// ... (import statements)
+
 function Messagerie() {
   const [conversations, setConversations] = useState([]);
   const loggedUserId = parseInt(localStorage.getItem('id'));
 
   useEffect(() => {
-    fetch('http://localhost:3001/chat')
+    // Fetch conversations data
+    fetch(`http://localhost:3001/chat/user/${loggedUserId}`)
       .then((response) => response.json())
       .then((data) => {
-        // Group messages by creator_id
+        // Group messages by service_id
         const groupedConversations = data.reduce((groups, conversation) => {
-          const key = conversation.creator_id;
+          const key = conversation.service_id;
           if (!groups[key]) {
             groups[key] = [];
           }
@@ -24,55 +27,57 @@ function Messagerie() {
           return groups;
         }, {});
 
-        // Get the conversation between the logged-in user and each creator
-        const filteredConversations = Object.keys(groupedConversations).map((creatorId) => {
-          const messages = groupedConversations[creatorId];
-          const conversation = messages.find((message) => message.user_id === loggedUserId);
+        // Get the conversation between the logged-in user and each service
+        const filteredConversations = Object.keys(groupedConversations).map((serviceId) => {
+          const messages = groupedConversations[serviceId];
           const lastMessage = messages[messages.length - 1]; // Get the last message of the conversation
+          const participants = [...new Set(messages.map((message) => message.user_id))]; // Get unique user_ids in the conversation
+          const filteredParticipants = participants.filter((participantId) => participantId !== loggedUserId); // Exclude the logged-in user from the participants
+
           return {
-            id: conversation.id,
+            id: parseInt(serviceId), // Assuming serviceId is a unique identifier for services
             user_id: loggedUserId,
-            creator_id: parseInt(creatorId),
-            creator_firstname: '', // We'll fetch this later
+            service_id: parseInt(serviceId),
+            participants: filteredParticipants, // Store unique user_ids for the conversation (excluding the logged-in user)
             lastMessageDate: lastMessage.created_at,
             lastMessagePreview: lastMessage.message,
+            messages, // Add the messages of the conversation to the new object
           };
         });
 
         setConversations(filteredConversations);
+
+        // Fetch data for each service_id and update conversations with additional data
+        Promise.all(
+          filteredConversations.map(async (conversation) => {
+            try {
+              const response = await fetch(`http://localhost:3001/service/annonces/${conversation.service_id}`);
+              const data = await response.json();
+              conversation.title = data.title;
+              conversation.description = data.description;
+              conversation.imageName = data.img_name;
+              conversation.creator = data.user_id;
+
+              // Fetch creator's data
+              const userResponse = await fetch(`http://localhost:3001/users/${data.user_id}`);
+              const userData = await userResponse.json();
+              conversation.creatorFirstName = userData.firstname;
+              conversation.creatorLastName = userData.lastname;
+
+              return conversation;
+            } catch (error) {
+              console.error('Erreur lors de la récupération des services:', error);
+              return conversation; // Return the conversation object without additional data
+            }
+          })
+        ).then((updatedConversations) => {
+          setConversations(updatedConversations);
+        });
       })
       .catch((error) => {
         console.error('Erreur lors de la récupération des conversations:', error);
       });
   }, [loggedUserId]);
-
-  const fetchCreatorFirstnames = async (creatorIds) => {
-    try {
-      const promises = creatorIds.map((creatorId) => fetch(`http://localhost:3001/users/${creatorId}`).then((response) => response.json()));
-      const firstnames = await Promise.all(promises);
-      return firstnames;
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-      return [];
-    }
-  };
-
-  useEffect(() => {
-    if (conversations.length > 0) {
-      const creatorIds = conversations.map((conversation) => conversation.creator_id);
-      fetchCreatorFirstnames(creatorIds)
-        .then((firstnames) => {
-          const updatedConversations = conversations.map((conversation, index) => ({
-            ...conversation,
-            creator_firstname: firstnames[index].firstname,
-          }));
-          setConversations(updatedConversations);
-        })
-        .catch((error) => {
-          console.error('Error fetching creator firstnames:', error);
-        });
-    }
-  }, [conversations]);
 
   return (
     <div className="flex flex-col min-h-screen overflow-hidden">
@@ -88,21 +93,50 @@ function Messagerie() {
                 <div className="space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
                   {/* Render conversation cards */}
                   {conversations.map((conversation) => (
-                    <Link
-                      key={conversation.id}
-                      to={`/chat/${conversation.creator_id}`}
-                      className="block w-full bg-white border border-gray-200 rounded-lg shadow p-4 hover:bg-gray-50 transition duration-300 ease-in-out"
-                    >
-                      <div className="flex items-center justify-between mb-4">
-                        <span className="text-lg font-semibold text-gray-900">Vous avez parlé à {conversation.creator_firstname}</span>
-                        {/* Display the formatted date of the last message */}
-                        <span className="text-gray-500 text-sm">
-                        {formatDistanceToNow(new Date(conversation.lastMessageDate), { locale: fr, addSuffix: true })}
-
-                        </span>
-                      </div>
-                      <p className="text-sm text-gray-700 truncate">Le dernier message envoyé est: {conversation.lastMessagePreview}</p>
-                    </Link>
+                    <div key={conversation.id}>
+                      {/* Render multiple cards for each participant */}
+                      {conversation.participants.map((participantId) => (
+                        <Link
+                          key={participantId}
+                          to={`/chat/${participantId}/${conversation.service_id}`}
+                          className="block w-full bg-white border border-gray-200 rounded-lg shadow p-4 hover:bg-gray-50 transition duration-300 ease-in-out"
+                        >
+                          {/* Utilizez les données de chaque conversation ici */}
+                          <div className="flex items-center justify-between mb-4">
+                            <span className="text-lg font-semibold text-gray-900">
+                              Annonce pour : {conversation.title}
+                            </span>
+                            <h2>
+                              {participantId !== conversation.creator ? ( // Check if the logged-in user is not the creator
+                                <>
+                                  Postée par : {conversation.creatorFirstName} {conversation.creatorLastName}
+                                </>
+                              ) : (
+                                <>
+                                  Avec : {conversation.creatorFirstName} {conversation.creatorLastName}
+                                </>
+                              )}
+                            </h2>
+                            {/* Display the formatted date of the last message */}
+                            <span className="text-gray-500 text-sm">
+                              {formatDistanceToNow(new Date(conversation.lastMessageDate), {
+                                locale: fr,
+                                addSuffix: true,
+                              })}
+                            </span>
+                          </div>
+                          {/* Ajoutez l'affichage des autres informations du service ici */}
+                          <p>Description : {conversation.description}</p>
+                          {/* Affichez l'image si nécessaire */}
+                          {/* {conversation.imageName && (
+                            <img src={`http://localhost:3001/annonce_photos/${conversation.imageName}`} alt="Image du service" />
+                          )} */}
+                          {/* Ajoutez l'affichage des messages pour chaque conversation */}
+                          <div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
                   ))}
                 </div>
               </div>
@@ -117,3 +151,4 @@ function Messagerie() {
 }
 
 export default Messagerie;
+
