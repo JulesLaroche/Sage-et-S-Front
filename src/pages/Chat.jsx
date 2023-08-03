@@ -11,8 +11,21 @@ function Chat() {
     const Id = window.localStorage.getItem('id');
     const [filteredUserMessages, setFilteredUserMessages] = useState([]);
     const [filteredCreatorMessages, setFilteredCreatorMessages] = useState([]);
-    const [isServiceValidated, setIsServiceValidated] = useState(false); // New state variable
-    const [validationButtonText, setValidationButtonText] = useState("Valider ce service");
+    const [isServiceValidated, setIsServiceValidated] = useState(false);
+    const [isCurrentUserValidated, setIsCurrentUserValidated] = useState(false);
+    const [isCurrentParticipantValidated, setIsCurrentParticipantValidated] = useState(false);
+    const [isAllParticipantsValidated, setIsAllParticipantsValidated] = useState(false);
+    const [announcementTitle, setAnnouncementTitle] = useState('');
+    const [isAnnouncementValidated, setIsAnnouncementValidated] = useState(false);
+    const [address, setAddress] = useState('');
+    const [tel, setTel] = useState('');
+    const [date, setDate] = useState('');
+    const [isFormSubmitted, setIsFormSubmitted] = useState(false); // Add a state variable for form submission
+    const [userCategory, setUserCategory] = useState('');
+    const [userImgName, setUserImgName] = useState('');
+    const [confirmationData, setConfirmationData] = useState(null);
+    const [hasConfirmationData, setHasConfirmationData] = useState(false);
+
 
 
     const getMessages = () => {
@@ -49,8 +62,28 @@ function Chat() {
 
 
 
+
+
+
     useEffect(() => {
         getMessages();
+
+        fetch(`http://localhost:3001/users/${Id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                // Set the user category and image name in the state hooks
+                setUserCategory(data.category);
+                setUserImgName(data.img_name);
+                setUser(data); // You can still keep this line if you need the full user data in the 'user' state.
+            })
+            .catch((error) => {
+                console.error('Erreur lors de la récupération de l\'utilisateur:', error);
+            });
+        const participant = user_id;
+        console.log(user_id);
+        console.log(participant);
+        console.log(Id);
+        console.log(userCategory);
 
         fetch(`http://localhost:3001/users/${user_id}`)
             .then((response) => response.json())
@@ -58,9 +91,44 @@ function Chat() {
             .catch((error) => {
                 console.error('Erreur lors de la récupération de l\'utilisateur:', error);
             });
-        const participant = user_id;
-        console.log(participant);
-        console.log(Id);
+
+        fetch(`http://localhost:3001/service/annonces/${service_id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setAnnouncementTitle(data.title); // Save the title in the state
+            })
+            .catch((error) => {
+                console.error('Erreur lors de la récupération du titre de l\'annonce:', error);
+            });
+
+
+
+            fetch(`http://localhost:3001/confirmation/${service_id}/${user_id}/${Id}`)
+            .then((response) => response.json())
+            .then((data) => {
+              if (data && data.length > 0) {
+                // Si 'data' est définie et contient des éléments, utilisez les valeurs normales
+                console.log('Données de confirmation récupérées avec succès:', data);
+                setConfirmationData(data);
+                setHasConfirmationData(true);
+              } else {
+                // Si 'data' est nulle ou vide, inversez 'user_id' et 'Id'
+                fetch(`http://localhost:3001/confirmation/${service_id}/${Id}/${user_id}`)
+                  .then((response) => response.json())
+                  .then((data) => {
+                    console.log('Données de confirmation récupérées avec succès (inversées) :', data);
+                    setConfirmationData(data);
+                    setHasConfirmationData(true);
+                  })
+                  .catch((error) => {
+                    console.error('Erreur lors de la récupération des données de confirmation (inversées) :', error);
+                  });
+              }
+            })
+            .catch((error) => {
+              console.error('Erreur lors de la récupération des données de confirmation :', error);
+            });
+
 
     }, [user_id, service_id, Id]);
 
@@ -111,11 +179,6 @@ function Chat() {
         setMessageContent('');
     };
 
-
-
-
-
-
     const handleServiceValidation = () => {
         fetch(`http://localhost:3001/validate`, {
             method: 'POST',
@@ -133,6 +196,7 @@ function Chat() {
                 console.log('Service validé avec succès :', data);
                 setIsServiceValidated(true); // Set the validation state to true on successful validation
                 // Refresh the messages after successful validation
+                window.location.reload(); // Rafraîchir la page après la validation réussie
                 getMessages();
             })
             .catch((error) => {
@@ -147,18 +211,65 @@ function Chat() {
             .then((data) => {
                 // Check if any validation entry exists for the current service
                 setIsServiceValidated(data.length > 0);
+
+                // Check if the current user (user_id) is the one who validated the service
+                const currentUserValidated = data.some((entry) => entry.user_id === parseInt(Id));
+                setIsCurrentUserValidated(currentUserValidated);
+
+                const currentParticipantValidated = data.some((entry) => entry.participant_id === parseInt(user_id));
+                setIsCurrentParticipantValidated(currentParticipantValidated);
+
+                // Check if all participants who validated have the same service_id
+                const allParticipantsValidated = data.every((entry) => entry.service_id === parseInt(service_id));
+                setIsAllParticipantsValidated(allParticipantsValidated);
+
+
             })
             .catch((error) => {
                 console.error('Erreur lors de la récupération de la validation du service:', error);
             });
-    }, [service_id]);
 
 
+    }, [user_id, service_id, Id]);
+
+    const handleConfirmationSubmit = (e) => {
+        e.preventDefault();
+
+        // Create an object containing the form data
+        const formData = {
+            adress: address,
+            tel: tel,
+            date: date,
+            id_apprenti: parseInt(user_id),
+            id_sage: parseInt(Id),
+            id_service: parseInt(service_id),
+        };
+
+        // Send the form data to the server using a POST request
+        fetch('http://localhost:3001/confirmation', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Erreur lors de l\'envoi du formulaire de confirmation');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Formulaire de confirmation envoyé avec succès:', data);
+                setIsFormSubmitted(true); // Mettre à jour le state pour indiquer que le formulaire a été soumis avec succès
+                window.location.reload(); // Rafraîchir la page après la validation réussie
 
 
-
-
-
+            })
+            .catch((error) => {
+                console.error('Erreur lors de l\'envoi du formulaire de confirmation:', error);
+            });
+    };
 
     return (
 
@@ -176,6 +287,7 @@ function Chat() {
                             {/* Section header */}
                             <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
                                 <h1 className="h1">Messagerie</h1>
+                                <h2 className="h2">Annonce : {announcementTitle}</h2>
                             </div>
 
                             <div className="flex-1 p:2 sm:p-6  flex flex-col ">
@@ -199,23 +311,6 @@ function Chat() {
                                             </div>
                                         )}
                                     </div>
-                                    <div className="flex items-center space-x-2">
-                                        {/* <button type="button" className="inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                                            </svg>
-                                        </button>
-                                        <button type="button" className="inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                                            </svg>
-                                        </button>
-                                        <button type="button" className="inline-flex items-center justify-center rounded-lg border h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path>
-                                            </svg>
-                                        </button> */}
-                                    </div>
                                 </div>
 
 
@@ -233,7 +328,7 @@ function Chat() {
                                                 </div>
                                                 {user && (
                                                     <img
-                                                        src={`http://localhost:3001/user_profile_photos/${user.img_name}`}
+                                                        src={`http://localhost:3001/user_profile_photos/${userImgName}`}
                                                         alt="My profile"
                                                         className="w-6 h-6 rounded-full order-2"
                                                     />
@@ -281,22 +376,6 @@ function Chat() {
                                             onChange={handleMessageChange}
                                         />
                                         <div className="absolute right-0 items-center inset-y-0 hidden sm:flex">
-                                            {/* <button type="button" className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-gray-600">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
-                                                </svg>
-                                            </button>
-                                            <button type="button" className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-gray-600">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                                </svg>
-                                            </button>
-                                            <button type="button" className="inline-flex items-center justify-center rounded-full h-10 w-10 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-gray-600">
-                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                                                </svg>
-                                            </button> */}
                                             <button
                                                 type="button"
                                                 className="inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-blue-500 hover:bg-blue-400 focus:outline-none"
@@ -310,15 +389,15 @@ function Chat() {
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
-
-
-
                             <div className="flex justify-center">
                                 {/* Conditionally render the button or the validation message */}
-                                {!isServiceValidated ? (
-                                    user && user.id !== parseInt(Id) && (
+                                {isServiceValidated && isCurrentUserValidated && isCurrentParticipantValidated && isAllParticipantsValidated ? (
+                                    <p className="text-green-500 font-bold py-2 px-4 rounded mt-4">
+                                        L'annonce est bien validée
+                                    </p>
+                                ) : (
+                                    user && user.id !== parseInt(Id) && !isAnnouncementValidated && (
                                         <button
                                             className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4"
                                             onClick={handleServiceValidation}
@@ -326,37 +405,110 @@ function Chat() {
                                             Valider ce service
                                         </button>
                                     )
-                                ) : (
-                                    <p className="text-green-500 font-bold py-2 px-4 rounded mt-4">
-                                        L'annonce est bien validée
-                                    </p>
                                 )}
                             </div>
 
 
+                            {isServiceValidated && userCategory == "apprenti" && confirmationData && !confirmationData.length > 0 &&  (
+                                <div id="tohide">
 
+                                    <button type="button" className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-800 dark:bg-white dark:border-gray-700 dark:text-gray-900 dark:hover:bg-gray-200 mr-2 mb-2">
+                                        <svg aria-hidden="true" className="w-10 h-3 mr-2 -ml-1" viewBox="0 0 660 203" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M233.003 199.762L266.362 4.002H319.72L286.336 199.762H233.003V199.762ZM479.113 8.222C468.544 4.256 451.978 0 431.292 0C378.566 0 341.429 26.551 341.111 64.604C340.814 92.733 367.626 108.426 387.865 117.789C408.636 127.387 415.617 133.505 415.517 142.072C415.384 155.195 398.931 161.187 383.593 161.187C362.238 161.187 350.892 158.22 333.368 150.914L326.49 147.803L319.003 191.625C331.466 197.092 354.511 201.824 378.441 202.07C434.531 202.07 470.943 175.822 471.357 135.185C471.556 112.915 457.341 95.97 426.556 81.997C407.906 72.941 396.484 66.898 396.605 57.728C396.605 49.591 406.273 40.89 427.165 40.89C444.611 40.619 457.253 44.424 467.101 48.39L471.882 50.649L479.113 8.222V8.222ZM616.423 3.99899H575.193C562.421 3.99899 552.861 7.485 547.253 20.233L468.008 199.633H524.039C524.039 199.633 533.198 175.512 535.27 170.215C541.393 170.215 595.825 170.299 603.606 170.299C605.202 177.153 610.098 199.633 610.098 199.633H659.61L616.423 3.993V3.99899ZM551.006 130.409C555.42 119.13 572.266 75.685 572.266 75.685C571.952 76.206 576.647 64.351 579.34 57.001L582.946 73.879C582.946 73.879 593.163 120.608 595.299 130.406H551.006V130.409V130.409ZM187.706 3.99899L135.467 137.499L129.902 110.37C120.176 79.096 89.8774 45.213 56.0044 28.25L103.771 199.45L160.226 199.387L244.23 3.99699L187.706 3.996" fill="#0E4595" /><path d="M86.723 3.99219H0.682003L0 8.06519C66.939 24.2692 111.23 63.4282 129.62 110.485L110.911 20.5252C107.682 8.12918 98.314 4.42918 86.725 3.99718" fill="#F2AE14" /></svg>
+                                        Pay with Visa
+                                    </button>
+                                    {isFormSubmitted ? ( // Use the form submission state to conditionally render the message or the form
+                                        <p>Vos informations ont été envoyées au sage</p>
+                                    ) : (
+                                        <form>
+                                            <div className="mb-6">
+                                                <label htmlFor="adress" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                    L'adresse où se déroule le service:
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    id="adress"
+                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    placeholder="l'adresse du service"
+                                                    required
+                                                    value={address}
+                                                    onChange={(e) => setAddress(e.target.value)}
+                                                />
+                                            </div>
+                                            <div className="mb-6">
+                                                <label htmlFor="tel" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                    Votre téléphone:
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    id="tel"
+                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    required
+                                                    value={tel}
+                                                    onChange={(e) => setTel(e.target.value)}
+                                                />
+                                            </div>
+                                            <div className="mb-6">
+                                                <label htmlFor="date" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                    La date et l'heure du rendez-vous:
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    id="date"
+                                                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                                    required
+                                                    value={date}
+                                                    onChange={(e) => setDate(e.target.value)}
+                                                />
+                                            </div>
+                                            <button
+                                                type="submit"
+                                                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                                                onClick={handleConfirmationSubmit}
+                                            >
+                                                Envoyer vos informations au sage
+                                            </button>
+                                        </form>
+                                    )}
+                                </div>
 
-
-
-                            <div id="tohide">
-                                <button type="button" className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-800 dark:bg-white dark:border-gray-700 dark:text-gray-900 dark:hover:bg-gray-200 mr-2 mb-2">
-                                    <svg aria-hidden="true" className="w-10 h-3 mr-2 -ml-1" viewBox="0 0 660 203" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M233.003 199.762L266.362 4.002H319.72L286.336 199.762H233.003V199.762ZM479.113 8.222C468.544 4.256 451.978 0 431.292 0C378.566 0 341.429 26.551 341.111 64.604C340.814 92.733 367.626 108.426 387.865 117.789C408.636 127.387 415.617 133.505 415.517 142.072C415.384 155.195 398.931 161.187 383.593 161.187C362.238 161.187 350.892 158.22 333.368 150.914L326.49 147.803L319.003 191.625C331.466 197.092 354.511 201.824 378.441 202.07C434.531 202.07 470.943 175.822 471.357 135.185C471.556 112.915 457.341 95.97 426.556 81.997C407.906 72.941 396.484 66.898 396.605 57.728C396.605 49.591 406.273 40.89 427.165 40.89C444.611 40.619 457.253 44.424 467.101 48.39L471.882 50.649L479.113 8.222V8.222ZM616.423 3.99899H575.193C562.421 3.99899 552.861 7.485 547.253 20.233L468.008 199.633H524.039C524.039 199.633 533.198 175.512 535.27 170.215C541.393 170.215 595.825 170.299 603.606 170.299C605.202 177.153 610.098 199.633 610.098 199.633H659.61L616.423 3.993V3.99899ZM551.006 130.409C555.42 119.13 572.266 75.685 572.266 75.685C571.952 76.206 576.647 64.351 579.34 57.001L582.946 73.879C582.946 73.879 593.163 120.608 595.299 130.406H551.006V130.409V130.409ZM187.706 3.99899L135.467 137.499L129.902 110.37C120.176 79.096 89.8774 45.213 56.0044 28.25L103.771 199.45L160.226 199.387L244.23 3.99699L187.706 3.996" fill="#0E4595" /><path d="M86.723 3.99219H0.682003L0 8.06519C66.939 24.2692 111.23 63.4282 129.62 110.485L110.911 20.5252C107.682 8.12918 98.314 4.42918 86.725 3.99718" fill="#F2AE14" /></svg>
-                                    Pay with Visa
-                                </button>
-                                <form>
-                                    <div className="mb-6">
-                                        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre adresse</label>
-                                        <input type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="l'adresse du service" required />
-                                    </div>
-                                    <div className="mb-6">
-                                        <label htmlFor="tel" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Votre téléphone</label>
-                                        <input type="tel" id="tel" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
-                                    </div>
-                                    <button type="submit" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Sauvegarder</button>
-                                </form>
+                            )}
+                            {isServiceValidated && isCurrentUserValidated && isCurrentParticipantValidated && isAllParticipantsValidated && userCategory == "sage" && confirmationData && !confirmationData.length > 0 && (
+                                <div className="flex justify-center">
+                                    <p className="text-blue-400  font-bold py-2 px-4 rounded mt-4">
+                                        En attente de validation et de paiement par l'apprenti
+                                    </p>
+                                </div>
+                            )}
+                            
+                            <div>
+                                {confirmationData && confirmationData.length > 0 ?  (
+                                    <>
+                                        <p>Adresse : {confirmationData[0].adress}</p>
+                                        <p>Téléphone : {confirmationData[0].tel}</p>
+                                        <p>Date : {confirmationData[0].date}</p>
+                                    </>
+                                ) : (
+                                     <p className="text-blue-400  font-bold py-2 px-4 rounded mt-4">
+                                   
+                                    </p>
+                                )}
                             </div>
-
-
+                            {/* <div className="flex justify-center">
+                                {isServiceValidated && isCurrentUserValidated && confirmationData && !confirmationData.length > 0 ? (
+                                    <p className="text-green-500 font-bold py-2 px-4 rounded mt-4">
+                                        L'annonce est bien validée
+                                    </p>
+                                ) : (
+                                    user && user.id !== parseInt(Id) && !isAnnouncementValidated && (
+                                        <button
+                                            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded mt-4"
+                                            // onClick={handleServiceValidation}
+                                        >
+                                            Le service s'est bien déroulé ? Appuyer sur ce bouton pour supprimer votre conversation
+                                        </button>
+                                    )
+                                )}
+                            </div> */}
 
                         </div>
 

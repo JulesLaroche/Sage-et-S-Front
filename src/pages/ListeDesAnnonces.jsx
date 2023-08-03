@@ -82,8 +82,9 @@ function ListeDesAnnonces() {
     if (keywordFilter) {
       const normalizedKeyword = diacritics.remove(keywordFilter).toLowerCase();
       const normalizedTitle = diacritics.remove(annonce.title).toLowerCase();
+      const normalizedDesc = diacritics.remove(annonce.description).toLowerCase();
 
-      if (!normalizedTitle.includes(normalizedKeyword)) {
+      if (!normalizedTitle.includes(normalizedKeyword) && !normalizedDesc.includes(normalizedKeyword)) {
         return false;
       }
     }
