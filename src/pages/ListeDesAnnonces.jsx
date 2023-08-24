@@ -2,19 +2,24 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PageIllustration from '../partials/PageIllustration';
 import Footer from '../partials/Footer';
-import Cookies from '../partials/cookies';
+// import Cookies from '../partials/cookies';
 import diacritics from 'diacritics';
+import Cookies from 'universal-cookie';
+
+
 
 function ListeDesAnnonces() {
   const [annonces, setAnnonces] = useState([]);
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
-  const token = localStorage.getItem('token');
-
+  const cookies = new Cookies();
+ 
   // Etats locaux pour les filtres
   const [categoryFilter, setCategoryFilter] = useState('');
   const [typeFilter, setTypeFilter] = useState('');
   const [keywordFilter, setKeywordFilter] = useState('');
+
+
 
   useEffect(() => {
     const userId = localStorage.getItem('id');
@@ -23,12 +28,16 @@ function ListeDesAnnonces() {
       return;
     }
 
+    const token = cookies.get('token'); // Récupère le token depuis les cookies
+
+
     fetch('http://localhost:3001/service/annonces', {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
+      credentials: 'include'
     })
       .then((response) => response.json())
       .then((data) => {
@@ -40,6 +49,7 @@ function ListeDesAnnonces() {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
           },
+          credentials: 'include'
         })
           .then((response) => response.json())
           .then((userData) => {
@@ -118,7 +128,7 @@ function ListeDesAnnonces() {
         <section className='relative pt-32 pb-10 md:pt-40 md:pb-1'>
           <div className='max-w-5xl mx-auto pb-8 md:pb-8'>
             <div className="py-12 md:py-8">
-            <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
+              <div className="max-w-3xl mx-auto text-center pb-12 md:pb-16">
                 <h1 className="h1">Liste de nos annonces</h1>
               </div>
               <body className="antialiased  text-gray-900 font-sans p-6  ">
@@ -214,7 +224,7 @@ function ListeDesAnnonces() {
           </div>
         </section>
 
-        <Cookies />
+        {/* <Cookies /> */}
       </main>
 
       {/* Site footer */}

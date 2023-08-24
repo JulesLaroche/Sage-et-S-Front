@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 
+
 function Profile() {
 
     const navigate = useNavigate();
@@ -58,14 +59,16 @@ function Profile() {
 
 
     useEffect(() => {
-        const token = localStorage.getItem('token');
+        const token = cookies.get('token'); // Récupère le token depuis les cookies
+        console.log(token);
 
         fetch(`http://localhost:3001/users/${id}`, {
-            credentials: "include",
             method: "GET",
             headers: {
+                'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
-            }
+              },
+              credentials: 'include'
         })
             .then(response => response.json())
             .then((data) => {
