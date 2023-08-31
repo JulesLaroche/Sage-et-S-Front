@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import PageIllustration from '../partials/PageIllustration';
-import Cookies from '../partials/cookies';
+import Cookie from '../partials/cookie';
 import Footer from '../partials/Footer';
 import { fr } from 'date-fns/locale';
 
@@ -62,7 +62,7 @@ function Validation() {
             </div>
           </div>
         </section>
-        <Cookies />
+        <Cookie />
       </main>
       <Footer />
     </div>

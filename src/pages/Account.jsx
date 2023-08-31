@@ -3,7 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import PageIllustration from '../partials/PageIllustration';
 import Footer from '../partials/Footer';
 import MesAnnonces from '../partials/MesAnnonces';
-import Cookies from '../partials/cookies';
+import Cookie from '../partials/cookie';
+import Cookies from 'universal-cookie';
 
 
 function Account() {
@@ -16,6 +17,7 @@ function Account() {
   const [content, setContent] = useState('');
   const [imgName, setImgName] = useState('');
   const navigate = useNavigate();
+  const cookies = new Cookies();
 
   useEffect(() => {
     const id = localStorage.getItem('id'); // Récupérer l'ID à partir du local storage
@@ -26,10 +28,15 @@ function Account() {
       navigate('/signup');
       return;
     }
+    const token = cookies.get('token');
 
     fetch(`http://localhost:3001/users/${id}`, {
       credentials: 'include',
       method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -96,7 +103,13 @@ function Account() {
                     </div>
                     <div className="relative">
                       <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
-                        {imgName && <img src={`http://localhost:3001/user_profile_photos/${imgName}`} alt="Profile Image" className="h-48 w-48 rounded-full" />}
+                        {imgName && (
+                          <img
+                            src={`http://localhost:3001/user_profile_photos/${imgName}`}
+                            alt="Profile Image"
+                            className="h-48 w-48 rounded-full object-cover"
+                          />
+                        )}
                       </div>
                     </div>
 
@@ -128,7 +141,7 @@ function Account() {
             <MesAnnonces />
           </div>
         </section>
-        <Cookies />
+        <Cookie />
       </main>
 
       <Footer />

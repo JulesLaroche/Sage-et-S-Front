@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PageIllustration from '../partials/PageIllustration';
-import Cookies from '../partials/cookies';
+import Cookies from '../partials/cookie';
 import Footer from '../partials/Footer';
 
 

@@ -10,6 +10,7 @@ import Newsletter from '../partials/Newsletter';
 
 import Footer from '../partials/Footer';
 import Profile from '../partials/Profile';
+import Cookies from 'universal-cookie';
 
 
 
@@ -17,6 +18,7 @@ import Profile from '../partials/Profile';
 
 function ProfilePage() {
   const navigate = useNavigate();
+  const cookies = new Cookies();
 
   useEffect(() => {
     // Vérifier si l'ID utilisateur est présent dans le local storage

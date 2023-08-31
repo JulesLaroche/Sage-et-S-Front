@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-
+import Cookies from 'universal-cookie';
 
 import PageIllustration from '../partials/PageIllustration';
 import Footer from '../partials/Footer';
@@ -19,6 +19,7 @@ function ModifAnnonce() {
   const [postal_code, setPostal_code] = useState('');
   const [city, setCity] = useState('');
   const [img_name, setImageName] = useState("");
+  const cookies = new Cookies();
 
   const navigate = useNavigate();
   //  const { id } = useParams();
@@ -31,7 +32,7 @@ function ModifAnnonce() {
       navigate('/compte');
       return;
     }
-    const token = localStorage.getItem('token');
+    const token = cookies.get('token'); 
     // Envoyer une requête DELETE à l'API pour supprimer l'annonce
     fetch(`http://localhost:3001/service/${id}`, {
       credentials: 'include',
@@ -72,9 +73,17 @@ function ModifAnnonce() {
       navigate('/signup');
       return;
     }
+    const token = cookies.get('token');
 
     // Récupérer les informations de l'annonce depuis l'API en utilisant l'ID
-    fetch(`http://localhost:3001/service/edit/${id}`)
+    fetch(`http://localhost:3001/service/edit/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      credentials: 'include'
+    })
       .then(response => response.json())
       .then(data => {
         // Mettre à jour les valeurs des champs de formulaire avec les informations récupérées

@@ -2,19 +2,28 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import PageIllustration from '../partials/PageIllustration';
-import Cookies from '../partials/cookies';
+import Cookie from '../partials/cookie';
 import Footer from '../partials/Footer';
 import { fr } from 'date-fns/locale';
+import Cookies from 'universal-cookie';
 
 // ... (import statements)
 
 function Messagerie() {
   const [conversations, setConversations] = useState([]);
   const loggedUserId = parseInt(localStorage.getItem('id'));
+  const cookies = new Cookies();
 
   useEffect(() => {
+      const token = cookies.get('token');
     // Fetch conversations data
-    fetch(`http://localhost:3001/chat/user/${loggedUserId}`)
+    fetch(`http://localhost:3001/chat/user/${loggedUserId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      credentials: 'include'
+    })
       .then((response) => response.json())
       .then((data) => {
         // Group messages by service_id
@@ -51,7 +60,14 @@ function Messagerie() {
         Promise.all(
           filteredConversations.map(async (conversation) => {
             try {
-              const response = await fetch(`http://localhost:3001/service/annonces/${conversation.service_id}`);
+              const token = cookies.get('token'); 
+              const response = await fetch(`http://localhost:3001/service/annonces/${conversation.service_id}`, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+                },
+                credentials: 'include'
+              });
               const data = await response.json();
               conversation.title = data.title;
               conversation.description = data.description;
@@ -59,7 +75,13 @@ function Messagerie() {
               conversation.creator = data.user_id;
 
               // Fetch creator's data
-              const userResponse = await fetch(`http://localhost:3001/users/${data.user_id}`);
+              const userResponse = await fetch(`http://localhost:3001/users/${data.user_id}`, {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${token}`
+                },
+                credentials: 'include'
+              });
               const userData = await userResponse.json();
               conversation.creatorFirstName = userData.firstname;
               conversation.creatorLastName = userData.lastname;
@@ -143,7 +165,7 @@ function Messagerie() {
             </div>
           </div>
         </section>
-        <Cookies />
+        <Cookie />
       </main>
       <Footer />
     </div>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
+import Cookies from 'universal-cookie';
 
 function Profile() {
 
@@ -19,12 +19,16 @@ function Profile() {
     const [content, setContent] = useState("");
     const [img_name, setImageName] = useState("");
     const id = localStorage.getItem("id");
-
+    const cookies = new Cookies();
     const handleDeleteAccount = () => {
         if (window.confirm('Êtes-vous sûr de vouloir supprimer votre compte ?')) {
             fetch(`http://localhost:3001/users/${id}`, {
                 credentials: "include",
                 method: "DELETE",
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
             })
                 .then(response => {
                     if (response.ok) {
@@ -59,7 +63,7 @@ function Profile() {
 
 
     useEffect(() => {
-        const token = cookies.get('token'); // Récupère le token depuis les cookies
+        const token = cookies.get('token');
         console.log(token);
 
         fetch(`http://localhost:3001/users/${id}`, {
@@ -67,8 +71,8 @@ function Profile() {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
-              },
-              credentials: 'include'
+            },
+            credentials: 'include'
         })
             .then(response => response.json())
             .then((data) => {
@@ -86,7 +90,7 @@ function Profile() {
                 console.error('Erreur :', error);
             });
     }, [id]);
-
+    const token = cookies.get('token');
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -126,6 +130,7 @@ function Profile() {
                     method: "PUT",
                     headers: {
                         "Content-Type": "application/json",
+
                     },
                     body: JSON.stringify(updateUserData),
                 })
@@ -190,13 +195,13 @@ function Profile() {
                                 </div>
                                 <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2' >Photo de profil</label>
                                 <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-                                    
+
                                     <div className="space-y-1 text-center">
                                         <img
-                                                src={`http://localhost:3001/user_profile_photos/${img_name}`}
-                                                alt="Profile Image"
-                                                className="h-20 w-20 rounded-full mx-auto"
-                                            />
+                                            src={`http://localhost:3001/user_profile_photos/${img_name}`}
+                                            alt="Profile Image"
+                                            className="h-20 w-20 rounded-full mx-auto object-cover"
+                                        />
                                         <div className="flex text-sm text-gray-600">
                                             <label htmlFor="file-upload" className="relative cursor-pointer bg-gray-200 rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                                                 <span className="">Télécharger une photo</span>

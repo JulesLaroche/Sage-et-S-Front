@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PageIllustration from '../partials/PageIllustration';
 import Footer from '../partials/Footer';
 import { useParams } from 'react-router-dom';
+import Cookies from 'universal-cookie';
 
 function Chat() {
     const [user, setUser] = useState(null);
@@ -25,11 +26,18 @@ function Chat() {
     const [userImgName, setUserImgName] = useState('');
     const [confirmationData, setConfirmationData] = useState(null);
     const [hasConfirmationData, setHasConfirmationData] = useState(false);
+    const cookies = new Cookies();
 
 
-
+    const token = cookies.get('token');
     const getMessages = () => {
-        fetch(`http://localhost:3001/chat/${service_id}`) // Inclure le service_id dans l'URL de la requête
+        fetch(`http://localhost:3001/chat/${service_id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Inclure le token dans les en-têtes
+            },
+            credentials: 'include' // Inclure les credentials si nécessaire
+        })
             .then((response) => response.json())
             .then((data) => {
                 setMessages(data);
@@ -67,8 +75,14 @@ function Chat() {
 
     useEffect(() => {
         getMessages();
-
-        fetch(`http://localhost:3001/users/${Id}`)
+        const token = cookies.get('token');
+        fetch(`http://localhost:3001/users/${Id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}` // Inclure le token dans les en-têtes
+            },
+            credentials: 'include' // Inclure les credentials si nécessaire
+        })
             .then((response) => response.json())
             .then((data) => {
                 // Set the user category and image name in the state hooks
@@ -85,14 +99,26 @@ function Chat() {
         console.log(Id);
         console.log(userCategory);
 
-        fetch(`http://localhost:3001/users/${user_id}`)
+        fetch(`http://localhost:3001/users/${user_id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            credentials: 'include'
+        })
             .then((response) => response.json())
             .then((data) => setUser(data))
             .catch((error) => {
                 console.error('Erreur lors de la récupération de l\'utilisateur:', error);
             });
 
-        fetch(`http://localhost:3001/service/annonces/${service_id}`)
+        fetch(`http://localhost:3001/service/annonces/${service_id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            credentials: 'include'
+        })
             .then((response) => response.json())
             .then((data) => {
                 setAnnouncementTitle(data.title); // Save the title in the state
@@ -103,30 +129,42 @@ function Chat() {
 
 
 
-            fetch(`http://localhost:3001/confirmation/${service_id}/${user_id}/${Id}`)
+            fetch(`http://localhost:3001/confirmation/${service_id}/${user_id}/${Id}`, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` // Inclure le token dans les en-têtes
+                },
+                credentials: 'include' // Inclure les credentials si nécessaire
+            })
             .then((response) => response.json())
             .then((data) => {
-              if (data && data.length > 0) {
-                // Si 'data' est définie et contient des éléments, utilisez les valeurs normales
-                console.log('Données de confirmation récupérées avec succès:', data);
-                setConfirmationData(data);
-                setHasConfirmationData(true);
-              } else {
-                // Si 'data' est nulle ou vide, inversez 'user_id' et 'Id'
-                fetch(`http://localhost:3001/confirmation/${service_id}/${Id}/${user_id}`)
-                  .then((response) => response.json())
-                  .then((data) => {
-                    console.log('Données de confirmation récupérées avec succès (inversées) :', data);
+                if (data && data.length > 0) {
+                    // Si 'data' est définie et contient des éléments, utilisez les valeurs normales
+                    console.log('Données de confirmation récupérées avec succès:', data);
                     setConfirmationData(data);
                     setHasConfirmationData(true);
-                  })
-                  .catch((error) => {
-                    console.error('Erreur lors de la récupération des données de confirmation (inversées) :', error);
-                  });
-              }
+                } else {
+                    // Si 'data' est nulle ou vide, inversez 'user_id' et 'Id'
+                    fetch(`http://localhost:3001/confirmation/${service_id}/${Id}/${user_id}`, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        credentials: 'include'
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            console.log('Données de confirmation récupérées avec succès (inversées) :', data);
+                            setConfirmationData(data);
+                            setHasConfirmationData(true);
+                        })
+                        .catch((error) => {
+                            console.error('Erreur lors de la récupération des données de confirmation (inversées) :', error);
+                        });
+                }
             })
             .catch((error) => {
-              console.error('Erreur lors de la récupération des données de confirmation :', error);
+                console.error('Erreur lors de la récupération des données de confirmation :', error);
             });
 
 
@@ -206,7 +244,14 @@ function Chat() {
 
 
     useEffect(() => {
-        fetch(`http://localhost:3001/validate/${service_id}`)
+        const token = cookies.get('token');
+        fetch(`http://localhost:3001/validate/${service_id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            credentials: 'include'
+        })
             .then((response) => response.json())
             .then((data) => {
                 // Check if any validation entry exists for the current service
@@ -409,7 +454,7 @@ function Chat() {
                             </div>
 
 
-                            {isServiceValidated && userCategory == "apprenti" && confirmationData && !confirmationData.length > 0 &&  (
+                            {isServiceValidated && userCategory == "apprenti" && confirmationData && !confirmationData.length > 0 && (
                                 <div id="tohide">
 
                                     <button type="button" className="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-800 dark:bg-white dark:border-gray-700 dark:text-gray-900 dark:hover:bg-gray-200 mr-2 mb-2">
@@ -479,17 +524,17 @@ function Chat() {
                                     </p>
                                 </div>
                             )}
-                            
+
                             <div>
-                                {confirmationData && confirmationData.length > 0 ?  (
+                                {confirmationData && confirmationData.length > 0 ? (
                                     <>
                                         <p>Adresse : {confirmationData[0].adress}</p>
                                         <p>Téléphone : {confirmationData[0].tel}</p>
                                         <p>Date : {confirmationData[0].date}</p>
                                     </>
                                 ) : (
-                                     <p className="text-blue-400  font-bold py-2 px-4 rounded mt-4">
-                                   
+                                    <p className="text-blue-400  font-bold py-2 px-4 rounded mt-4">
+
                                     </p>
                                 )}
                             </div>

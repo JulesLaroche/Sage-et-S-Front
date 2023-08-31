@@ -1,7 +1,7 @@
 import React from 'react';
 
 import PageIllustration from '../partials/PageIllustration';
-import Cookies from '../partials/cookies';
+import Cookie from '../partials/cookie';
 import Footer from '../partials/Footer';
 import CommentCaText from '../partials/CommentCa';
 
@@ -22,7 +22,7 @@ function DeposerUneAnnonce() {
 
         <CommentCaText />
 
-        <Cookies />
+        <Cookie />
       </main>
 
 

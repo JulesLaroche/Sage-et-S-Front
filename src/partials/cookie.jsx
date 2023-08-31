@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function Cookies() {
+function Cookie() {
     const [showBanner, setShowBanner] = useState(false);
 
     useEffect(() => {
@@ -61,4 +61,4 @@ function Cookies() {
     );
 }
 
-export default Cookies;
+export default Cookie;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import PageIllustration from '../partials/PageIllustration';
-import Cookies from '../partials/cookies';
+import Cookie from '../partials/cookie';
 import Footer from '../partials/Footer';
 
 function SignUp() {
@@ -142,7 +142,7 @@ function SignUp() {
           </div>
         </section>
 
-        <Cookies />
+        <Cookie />
       </main>
       <Footer />
     </div>

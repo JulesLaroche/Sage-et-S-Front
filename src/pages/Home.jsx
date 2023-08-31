@@ -8,7 +8,7 @@ import Newsletter from '../partials/Newsletter';
 
 import Footer from '../partials/Footer';
 import Category from '../partials/Category';
-import Cookies from '../partials/cookies';
+import Cookie from '../partials/cookie';
 
 function Home() {
   return (
@@ -28,7 +28,7 @@ function Home() {
         <FeaturesZigZag />
         <Testimonials />
         <Newsletter />
-        <Cookies />
+        <Cookie />
       </main>
 
 

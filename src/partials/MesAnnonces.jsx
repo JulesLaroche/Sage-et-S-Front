@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-
+import Cookies from 'universal-cookie';
 
 function MesAnnonces() {
   const [annonces, setAnnonces] = useState([]);
   const [firstName, setFirstName] = useState('');
   const [imgProfile, setImgProfile] = useState('');
+  const cookies = new Cookies();
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = cookies.get('token'); 
     // Vérifier si l'ID utilisateur est présent dans le local storage
     const userId = localStorage.getItem('id');
     if (!userId) {
@@ -22,8 +23,10 @@ function MesAnnonces() {
       credentials: 'include',
       method: 'GET',
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
-      }
+      },
+
     })
       .then((response) => response.json())
       .then((data) => {
@@ -39,7 +42,9 @@ function MesAnnonces() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
       },
+      credentials: 'include'
     })
       .then((response) => response.json())
       .then((data) => {

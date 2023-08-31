@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PageIllustration from '../partials/PageIllustration';
 import Footer from '../partials/Footer';
-// import Cookies from '../partials/cookies';
+import Cookie from '../partials/cookie';
 import diacritics from 'diacritics';
 import Cookies from 'universal-cookie';
 
@@ -224,7 +224,7 @@ function ListeDesAnnonces() {
           </div>
         </section>
 
-        {/* <Cookies /> */}
+        <Cookie />
       </main>
 
       {/* Site footer */}

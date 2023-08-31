@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import PageIllustration from '../partials/PageIllustration';
-import Cookies from '../partials/cookies';
+import Cookie from '../partials/cookie';
 import Footer from '../partials/Footer';
 import Formulaire from '../partials/Formulaire';
 
@@ -47,7 +47,7 @@ function DeposerUneAnnonce() {
 
         </section>
 
-        <Cookies />
+        <Cookie />
       </main>
 
 
