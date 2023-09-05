@@ -1,6 +1,6 @@
 # Projet Sages & S
 
--------UPDATE: Beta du site sur : http://54.37.15.219/-------
+-------UPDATE: Beta du site sur : http://54.37.15.219/
 
 ![logo](https://github.com/JulesLaroche/Sage-et-S/assets/124147377/1bd333c6-0efb-4b63-9579-8f03c7d4f044)
 
