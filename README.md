@@ -2,7 +2,8 @@
 
 -------UPDATE: Beta du site sur : http://54.37.15.219/
 
-![logo](https://github.com/JulesLaroche/Sage-et-S/assets/124147377/1bd333c6-0efb-4b63-9579-8f03c7d4f044)
+![logo](https://github.com/JulesLaroche/Sage-et-S/assets/124147377/fd1f56e7-f754-4990-be2f-f24bf4f1f6f3)
+
 
 Sages & S est une plateforme en ligne de gestion de services conçue pour permettre aux utilisateurs de publier et de découvrir une variété de services offerts par d'autres utilisateurs. L'objectif principal de cette application est de faciliter les interactions entre les utilisateurs en leur fournissant un espace convivial pour partager et explorer divers services locaux.
 
